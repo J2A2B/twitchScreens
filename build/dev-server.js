@@ -86,17 +86,17 @@ var readyPromise = new Promise(resolve => {
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
-const TwitchApi = require('twitch-api');
-const twitch = new TwitchApi({
-    clientId: '4vanrv34kq4ot0f3qh84ng3qz2m9o7',
-    clientSecret: '1ab8qau7spg5lriibkwno3ulm2xbeg',
-    redirectUri: 'http://localhost/twitchApi'
-    // scopes: [user_read,channel_read,channel_commercial]
-  });
+// const TwitchApi = require('twitch-api');
+// const twitch = new TwitchApi({
+//     clientId: '4vanrv34kq4ot0f3qh84ng3qz2m9o7',
+//     clientSecret: '1ab8qau7spg5lriibkwno3ulm2xbeg',
+//     redirectUri: 'http://localhost/twitchApi'
+//     // scopes: [user_read,channel_read,channel_commercial]
+//   });
 
-app.get('/games', function(req,res){ 
-    res.send("couocu");
-})
+// app.get('/games', function(req,res){ 
+//     res.send("couocu");
+// })
 
 // router.get('/', function(req, res) {
 //     res.send(message : 'coucou')
@@ -123,7 +123,7 @@ devMiddleware.waitUntilValid(() => {
   _resolve()
 })
 
-var server = app.listen(port)
+var server = app.listen(8080)
 
 module.exports = {
   ready: readyPromise,
