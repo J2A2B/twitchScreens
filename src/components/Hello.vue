@@ -8,33 +8,25 @@
   </ul>
   <ul>
     <li v-for="element of streams">
-      <p><strong>{{element.channel.url}}</strong></p>
+      <a v-on:click="selectStream(element)">{{element.channel.name}}</a>
     </li>
   </ul>
-<div id="liveStream"></div>
-    <ScreenOne></ScreenOne>
-    <ScreenTwo></ScreenTwo>
+  <VueTwitchPlayer :channel = changeStream></VueTwitchPlayer>
   </div>
 </template>
 
 <script>
   import axios from 'axios'
-  import ScreenOne from './screenOne-component.vue'
-  import ScreenTwo from './screenTwo-component.vue'
+  import VueTwitchPlayer from './streamOne-component.vue'
 
   export default {
     name: 'hello',
     data: () => ({
       games: [],
       streams: [],
-      options: {
-        width: 854,
-        height: 480,
-        channel: "lefourbetv"
-      },
-      errors: []
+      errors: [],
+      changeStream: this.streamName
     }),
-
   // Fetches posts when the component is created.
     created () {
       axios.get('http://localhost:3000/games')
@@ -42,8 +34,6 @@
       // JSON responses are automatically parsed.
       this.games = response.data.top
       return this.games
-      // return console.log(this.posts)
-      // return this.posts
     })
     .catch(e => {
       this.errors.push(e)
@@ -53,40 +43,26 @@
       // JSON responses are automatically parsed.
       this.streams = response.data.streams
       return this.streams
-      // return console.log(this.posts)
-      // return this.posts
     })
     .catch(e => {
       this.errors.push(e)
     })
     },
-
-    // postSreenOne () {
-    //   axios.post('', {
-    //     body: this.postBody
-    //   })
-    //   .then(response => {})
-    //   .catch(e => {
-    //     this.errors.push(e)
-    //   })
-    // },
-    // data ()  {
-    //   posts: [],
-    //   errors: []
-    // ),
-    components: {
-      ScreenOne,
-      ScreenTwo
+    methods: {
+      selectStream: function (el) {
+        const streamName = el.channel.name
+        console.log(streamName)
+      }
     },
-  const player = new Twitch.Player("liveStream", options);
-  player.setVolume(0.5);
+    components: {
+      VueTwitchPlayer
+    }
   }
 </script>
 
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-<script src= "http://player.twitch.tv/js/embed/v1.js"></script>
 h1, h2 {
   font-weight: normal;
 }
