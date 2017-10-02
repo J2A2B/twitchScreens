@@ -11,13 +11,13 @@
       <a v-on:click="selectStream(element)">{{element.channel.name}}</a>
     </li>
   </ul>
-  <VueTwitchPlayer :channel = changeStream></VueTwitchPlayer>
+  <streamOne :id="changeStream"></streamOne>
   </div>
 </template>
 
 <script>
   import axios from 'axios'
-  import VueTwitchPlayer from './streamOne-component.vue'
+  import streamOne from './streamOne.vue'
 
   export default {
     name: 'hello',
@@ -25,7 +25,8 @@
       games: [],
       streams: [],
       errors: [],
-      changeStream: this.streamName
+      changeStream: 'game2eye' //default stream
+      //changeStream: this.streamName
     }),
   // Fetches posts when the component is created.
     created () {
@@ -50,12 +51,11 @@
     },
     methods: {
       selectStream: function (el) {
-        const streamName = el.channel.name
-        console.log(streamName)
+        this.changeStream = el.channel.name;
       }
     },
     components: {
-      VueTwitchPlayer
+      streamOne
     }
   }
 </script>
