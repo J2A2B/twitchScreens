@@ -1,17 +1,24 @@
 <template>
   <div class="hello">
+<div class="cont-menu">
   <ul>
     <li v-for="element of games">
-      <img v-bind:src="element.game.logo.large">
-      <p><strong>{{element.game.name}}</strong></p>
+      <!-- <img v-bind:src="element.game.box.small"> -->
+      <button type="button" v-on:click="selectStreamList(element)">{{element.game.name}}</button>
     </li>
   </ul>
+</div>
+<div class="cont-stream">
   <ul>
-    <li v-for="element of streams">
-      <a v-on:click="selectStream(element)">{{element.channel.name}}</a>
+    <li v-for="element of streams" key="item.id">
+      <p>{{element.channel.name}}</p>
+      <button type="button" v-on:click="selectStreamOne(element, 'inputOne')">Stream 1</button>
+      <button type="button" v-on:click="selectStreamOne(element, 'inputTwo')">Stream 2</button> 
     </li>
   </ul>
-  <streamOne :id="changeStream"></streamOne>
+  </div>
+  <streamOne :id="changeStreamOne"></streamOne>
+  <streamOne :id="changeStreamTwo"></streamOne>
   </div>
 </template>
 
@@ -25,8 +32,9 @@
       games: [],
       streams: [],
       errors: [],
-      changeStream: 'game2eye' //default stream
-      //changeStream: this.streamName
+      changeStreamOne: 'game2eye',
+      changeStreamTwo: 'packam'
+       //default stream
     }),
   // Fetches posts when the component is created.
     created () {
@@ -39,43 +47,57 @@
     .catch(e => {
       this.errors.push(e)
     })
-      axios.get('http://localhost:3000/streams')
-    .then(response => {
-      // JSON responses are automatically parsed.
-      this.streams = response.data.streams
-      return this.streams
-    })
-    .catch(e => {
-      this.errors.push(e)
-    })
     },
     methods: {
-      selectStream: function (el) {
-        this.changeStream = el.channel.name;
-      }
+      selectStreamList: function(element){
+        const name = element.game.name
+        axios.get('http://localhost:3000/streams/' + name)
+          .then(response => {
+           // JSON responses are automatically parsed.
+          this.streams = response.data.streams
+          // return this.streams
+          return console.log(this.streams)
+          })
+          .catch(e => {
+          this.errors.push(e)
+          })
+      },
+      selectStreamOne: function (element, inputTarget) {
+        const src = 'https://player.twitch.tv/?channel='
+        // const inputTarget = message
+          console.log(inputTarget)
+          if (inputTarget == 'inputOne') {
+            this.changeStreamOne = src + element.channel.name;
+            console.log(this.changeStreamOne)
+          }else if(inputTarget == 'inputTwo'){
+            // console.log(inputTarget)
+            this.changeStreamTwo = src + element.channel.name;
+            console.log(this.changeStreamTwo)
+          }
+      },
     },
     components: {
       streamOne
     }
   }
 </script>
-
-
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h1, h2 {
   font-weight: normal;
 }
-
+.hello{
+  display: flex;
+}
 ul {
   list-style-type: none;
   padding: 0;
+  border: solid 1px black;
+}
+.cont-menu{
+  width: 15%;
 }
 
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
 
 a {
   color: #42b983;
