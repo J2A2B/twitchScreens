@@ -17,8 +17,7 @@ const twitch = new TwitchApi({
   });
 
 app.get('/games', (req, res) => {
-  //res.send("coucou")
-    twitch.getTopGames(function(err, body){
+    twitch.getTopGames({limit:100},function(err, body){
     if (err){
       console.log(err);
     } else {
@@ -27,8 +26,10 @@ app.get('/games', (req, res) => {
 })
 })
 
-app.get('/streams', (req, res) => {
-    twitch.getStreams(function(err, body){
+app.get('/streams/:name', (req, res) => {
+  const name = req.params.name
+  console.log(name)
+    twitch.getStreams({game:name},function(err, body){
       if(err){
         console.log(err);
       }else{
@@ -36,6 +37,16 @@ app.get('/streams', (req, res) => {
       }
     })
 })
+
+// app.get('/chat', (req, res) => {
+//   twitch.getChannelChat({channel:'PyrooTv'},function(err, body){
+//     if (err) {
+//       console.log(err);
+//     }else{
+//       res.json(body)
+//     }
+//   })
+// })
 
 // app.get('/screenOne/:channel', (req, res) => {
 //   //res.send("coucou")
