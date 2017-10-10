@@ -1,6 +1,6 @@
 <template>
   <div class="chat">
-    <iframe frameborder="0" 
+    <iframe frameborder="1" 
     scrolling="no" 
     id="chat_embed"
     :src="this.id"
