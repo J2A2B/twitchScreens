@@ -5,7 +5,7 @@
         <div class="game">
           <div class="game-img"></div>
           <p>Twitch Screens</p>
-          <div class="game-img"></div>
+          <!-- <div class="game-img"></div> -->
         </div>
         <ul>
           <li v-for="element in games">
@@ -79,7 +79,7 @@
       display: flex;
       .cont-menu{
         height:100vh;
-        width: 12vw;
+        width: 8vw;
         background-color: #4b367c;
         color: white;
         overflow-y: scroll;
@@ -106,7 +106,7 @@
           }
         }
         .game{
-          width: 12vw;
+          width: 8vw;
           position: fixed;
           background-color: #1C232A;
           display: flex;
@@ -117,15 +117,16 @@
             background-color: #EC1313;
             background: url("../assets/screen.svg") no-repeat center;
             background-size: cover;
-            margin-right: 10px;
-            margin-left: 10px;
+            margin-right: 5px;
+            margin-left: 5px;
             height: 15px;
             width: 15px;
           }
           p{
             text-align: center;
-            margin-left: 5px;
             margin: 0;
+            margin-left: 5px;
+            margin-right: 5px;
             color: white;
             font-size: 11px;
           }
