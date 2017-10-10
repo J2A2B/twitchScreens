@@ -1,0 +1,10 @@
+{
+  "name": "animated-carnival",
+  "version": "1.0.0",
+  "description": "A MoVue.js Project",
+  "author": "SB & JFB",
+  "private": true,
+  "scripts": {
+    "postinstall": "npm install express"
+  }
+}
