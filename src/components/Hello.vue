@@ -1,105 +1,141 @@
 <template>
-  <div class="hello">
-<div class="cont-menu">
-  <ul>
-    <li v-for="element of games">
-      <!-- <img v-bind:src="element.game.box.small"> -->
-      <button type="button" v-on:click="selectStreamList(element)">{{element.game.name}}</button>
-    </li>
-  </ul>
-</div>
-<div class="cont-stream">
-  <ul>
-    <li v-for="element of streams" key="item.id">
-      <p>{{element.channel.name}}</p>
-      <button type="button" v-on:click="selectStreamOne(element, 'inputOne')">Stream 1</button>
-      <button type="button" v-on:click="selectStreamOne(element, 'inputTwo')">Stream 2</button> 
-    </li>
-  </ul>
-  </div>
-  <streamOne :id="changeStreamOne"></streamOne>
-  <streamOne :id="changeStreamTwo"></streamOne>
-  </div>
-</template>
+  <div class="main-cont">
+      <div class="main-cont-menu">
+        <div class="cont-menu">
+          <div class="game">
+            <div class="game-img"></div>
+            <p>Twitch Screens</p>
+            <div class="game-img"></div>
+          </div>
+          <ul>
+            <li v-for="element in games">
+              <img :src=element.game.logo.medium v-on:click="selectStreamList(element)">
+              <button type="button" v-on:click="selectStreamList(element)">{{element.game.name}}</button>
+            </li>
+          </ul>
+        </div>
+        <streamList :id="showStreamList"></streamList>
+      </div>
+    </div>
+  </template>
 
-<script>
-  import axios from 'axios'
-  import streamOne from './streamOne.vue'
+  <script>
+    import axios from 'axios'
+    import streamOne from './streamOne.vue'
+    import streamList from './streamList.vue'
+    import chat from './chat.vue'
 
-  export default {
-    name: 'hello',
-    data: () => ({
-      games: [],
-      streams: [],
-      errors: [],
-      changeStreamOne: 'game2eye',
-      changeStreamTwo: 'packam'
+    export default {
+      name: 'hello',
+      data: () => ({
+        games: [],
+        streams: [],
+        errors: [],
+        changeStreamOne: '',
+        changeStreamTwo: '',
+        showStreamList:''
        //default stream
-    }),
+     }),
   // Fetches posts when the component is created.
-    created () {
-      axios.get('http://localhost:3000/games')
+  created () {
+    axios.get('http://localhost:3000/games')
     .then(response => {
       // JSON responses are automatically parsed.
       this.games = response.data.top
-      return this.games
+
     })
     .catch(e => {
       this.errors.push(e)
     })
-    },
-    methods: {
-      selectStreamList: function(element){
-        const name = element.game.name
-        axios.get('http://localhost:3000/streams/' + name)
-          .then(response => {
+  },
+  methods: {
+    selectStreamList: function(element){
+      document.getElementById('stream-list').style.display = "block";
+      document.getElementById('search-cont').style.display = "flex";
+      const name = element.game.name
+      axios.get('http://localhost:3000/streams/' + name)
+      .then(response => {
            // JSON responses are automatically parsed.
-          this.streams = response.data.streams
+           this.showStreamList = response.data.streams
           // return this.streams
-          return console.log(this.streams)
-          })
-          .catch(e => {
-          this.errors.push(e)
-          })
-      },
-      selectStreamOne: function (element, inputTarget) {
-        const src = 'https://player.twitch.tv/?channel='
-        // const inputTarget = message
-          console.log(inputTarget)
-          if (inputTarget == 'inputOne') {
-            this.changeStreamOne = src + element.channel.name;
-            console.log(this.changeStreamOne)
-          }else if(inputTarget == 'inputTwo'){
-            // console.log(inputTarget)
-            this.changeStreamTwo = src + element.channel.name;
-            console.log(this.changeStreamTwo)
-          }
-      },
-    },
-    components: {
-      streamOne
+        })
+      .catch(e => {
+        this.errors.push(e)
+      })
     }
+  },
+  components: {
+    streamOne,
+    streamList,
+    chat
   }
+}
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h1, h2 {
-  font-weight: normal;
-}
-.hello{
-  display: flex;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-  border: solid 1px black;
-}
-.cont-menu{
-  width: 15%;
-}
+<style scoped lang="scss">
 
-
-a {
-  color: #42b983;
-}
+.main-cont{
+  background-color: #faf9fa;
+    .main-cont-menu{
+      display: flex;
+      .cont-menu{
+        height: calc(100vh);
+        background-color: #4b367c;
+        color: white;
+        overflow: scroll;
+        ul{
+          li{
+            display: flex;
+            flex-direction: column;
+            img{
+              cursor: pointer;
+              width: 100%;
+            }
+            button {
+              border: none;
+              background-color: #4b367c;
+              color: white;
+              padding: 5px;
+              cursor: pointer;
+              text-align: center;
+            }
+            button:hover{
+              color: #898395;
+            }
+          }
+        }
+        .game{
+          background-color: #1C232A;
+          /*background-color: #17141f;*/
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 50px;
+          .game-img{
+            background-color: #EC1313;
+            background: url("../assets/screen.svg") no-repeat center;
+            background-size: cover;
+            margin-right: 10px;
+            margin-left: 10px;
+            height: 15px;
+            width: 15px;
+          }
+          p{
+            text-align: center;
+            margin-left: 5px;
+            margin: 0;
+            color: white;
+            font-size: 11px;
+          }
+        }
+      }
+    }
+  }
+  h1, h2 {
+    font-weight: normal;
+  }
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
 </style>
