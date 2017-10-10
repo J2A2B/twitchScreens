@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "name": "twitchscreen",
   "version": "1.0.0",
   "description": "A Vue.js project",
@@ -78,4 +79,14 @@
     "last 2 versions",
     "not ie <= 8"
   ]
+=======
+  "name": "animated-carnival",
+  "version": "1.0.0",
+  "description": "A MoVue.js Project",
+  "author": "SB & JFB",
+  "private": true,
+  "scripts": {
+    "postinstall": "npm install express"
+  }
+>>>>>>> 08f2412924fa0ffbf8d03adfd8ebb3ef97f24fcc
 }
