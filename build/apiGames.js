@@ -37,15 +37,15 @@ app.get('/streams/:name', (req, res) => {
     })
 })
 
-app.get('/videos/:channel', (req, res) =>{
-  twitch.getChannelVideos ({channel:name, limit:100},function(err,body){
-    if (err) {
-      console.log(err);
-    }else{
-      res.json(body)
-    }
-  })
-})
+// app.get('/videos/:channel', (req, res) =>{
+//   twitch.getChannelVideos ({channel:name, limit:100},function(err,body){
+//     if (err) {
+//       console.log(err);
+//     }else{
+//       res.json(body)
+//     }
+//   })
+// })
 
 app.listen(3000, () => {
   console.log('listening on 3000')

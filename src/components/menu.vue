@@ -1,39 +1,39 @@
 <template>
   <div class="main-cont">
-      <div class="main-cont-menu">
-        <div class="cont-menu">
-          <div class="game">
-            <div class="game-img"></div>
-            <p>Twitch Screens</p>
-            <div class="game-img"></div>
-          </div>
-          <ul>
-            <li v-for="element in games">
-              <img :src=element.game.logo.medium v-on:click="selectStreamList(element)">
-              <button type="button" v-on:click="selectStreamList(element)">{{element.game.name}}</button>
-            </li>
-          </ul>
+    <div class="main-cont-menu">
+      <div class="cont-menu scrollbar" id="scroll-style">
+        <div class="game">
+          <div class="game-img"></div>
+          <p>Twitch Screens</p>
+          <div class="game-img"></div>
         </div>
-        <streamList :id="showStreamList"></streamList>
+        <ul>
+          <li v-for="element in games">
+            <img :src=element.game.box.large v-on:click="selectStreamList(element)">
+            <button type="button" v-on:click="selectStreamList(element)">{{element.game.name}}</button>
+          </li>
+        </ul>
       </div>
+      <streamList :id="showStreamList"></streamList>
     </div>
-  </template>
+  </div>
+</template>
 
-  <script>
-    import axios from 'axios'
-    import streamOne from './streamOne.vue'
-    import streamList from './streamList.vue'
-    import chat from './chat.vue'
+<script>
+  import axios from 'axios'
+  import streamOne from './streamOne.vue'
+  import streamList from './streamList.vue'
+  import chat from './chat.vue'
 
-    export default {
-      name: 'hello',
-      data: () => ({
-        games: [],
-        streams: [],
-        errors: [],
-        changeStreamOne: '',
-        changeStreamTwo: '',
-        showStreamList:''
+  export default {
+    name: 'menu',
+    data: () => ({
+      games: [],
+      streams: [],
+      errors: [],
+      changeStreamOne: '',
+      changeStreamTwo: '',
+      showStreamList:''
        //default stream
      }),
   // Fetches posts when the component is created.
@@ -73,17 +73,18 @@
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-
-.main-cont{
-  background-color: #faf9fa;
+  .main-cont{
+    background-color: #faf9fa;
     .main-cont-menu{
       display: flex;
       .cont-menu{
-        height: calc(100vh);
+        height:100vh;
+        width: 12vw;
         background-color: #4b367c;
         color: white;
-        overflow: scroll;
+        overflow-y: scroll;
         ul{
+          margin-top:50px;
           li{
             display: flex;
             flex-direction: column;
@@ -105,8 +106,9 @@
           }
         }
         .game{
+          width: 12vw;
+          position: fixed;
           background-color: #1C232A;
-          /*background-color: #17141f;*/
           display: flex;
           justify-content: center;
           align-items: center;
@@ -128,6 +130,21 @@
             font-size: 11px;
           }
         }
+      }
+      #scroll-style::-webkit-scrollbar-track
+      {
+        margin-top: 50px;
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+        background-color: transparent;
+      }
+      #scroll-style::-webkit-scrollbar
+      {
+        width: 6px;
+        background-color: transparent;
+      }
+      #scroll-style::-webkit-scrollbar-thumb
+      {
+        background-color: #000000;
       }
     }
   }

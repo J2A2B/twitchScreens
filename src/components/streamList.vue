@@ -1,6 +1,6 @@
 <template>
   <div class="cont-stream">
-    <ul class="list-stream" id="stream-list">
+    <ul class="list-stream scrollbar" id="stream-list">
       <div class="cont-search" id="search-cont">
         <input type="text" placeholder="search stream" v-model="search" >
         <div class="cont-close" v-on:click="closeListStream"></div>
@@ -95,13 +95,6 @@
       closeListStream: function(){
         document.getElementById('stream-list').style.display = "none";
       },
-      // searchStream: function(){
-      //     // var self=this;
-      //     //console.log(this.id[0].channel)
-      //     // return this.streams.filter(function(str){
-      //     //   return str.name.toLowerCase().indexOf(self.search.toLowerCase())>=0;
-      //     // });
-      //   }
     },
     components: {
       streamOne,
@@ -114,15 +107,18 @@
 .cont-stream{
   display: flex;
   .list-stream{
-    margin-top: 0px;
+    margin-top: 0;
+    width: 12vw;
     position: absolute;
     background-color: #1C232A;
-    max-height: calc(100vh);
-    overflow: scroll;
+    max-height: 100vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
     padding: 0px;
     .cont-search{
+      position: fixed;
       background-color: #17141f;
-      width: 100%;
+      width: 12vw;
       display: none;
       justify-content: space-between;
       align-items: center;
@@ -138,9 +134,11 @@
       input{
         height: 25px;
         margin-left: 10px;
+        width: 60%;
       }
     }
     li{
+      margin-top: 50px;
       display: flex;
       flex-direction: column;
       /* text-align: center;*/
@@ -156,10 +154,6 @@
         height: 30px;
         width: 30px;
       }
-      .cont-button{
-        display: flex;
-        justify-content: space-around;
-      }
       .info-stream{
         margin-left: 5px;
         display: flex;
@@ -167,10 +161,28 @@
         align-items: flex-start;
       }
     }
+    .cont-button{
+      display: flex;
+      .btn-stream{
+        border-style: none;
+        border: none;
+        background-color: #17141f;
+        color: white;
+        margin-left: 5px;
+        margin-right: 5px;
+        cursor: pointer;
+      }
+      .btn-stream:hover{
+        color: #ec1313;
+      }
+    }
     p{
       margin: 0px;
       color: white;
       text-align: center; 
+      text-overflow: ellipsis;
+      /* white-space: nowrap;*/
+      /*overflow: hidden;*/
     }
     .cont-views{
       display: flex;
@@ -193,23 +205,27 @@
       margin-top: 5px;
     }
   }
-}
-
-}
-
-.btn-stream{
-  border-style: none;
-  border: none;
-  background-color: #17141f;
-  color: white;
-  margin-left: 5px;
-  margin-right: 5px;
-  cursor: pointer;
-}
-.btn-stream:hover{
-  color: #ec1313;
+  li:nth-child(2){
+    margin-top: 60px;
+  }
 }
 .cont-iframe{
   display: flex;
+}
+#stream-list::-webkit-scrollbar-track
+{
+  margin-top: 50px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  background-color: #1C232A;
+}
+#stream-list::-webkit-scrollbar
+{
+  width: 6px;
+  background-color: #1C232A;
+}
+#stream-list::-webkit-scrollbar-thumb
+{
+  background-color: #4b367c;
+}
 }
 </style>

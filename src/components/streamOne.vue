@@ -24,6 +24,8 @@
   display: flex;
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
   margin: 5px;
+  width: 43vw;
+  height: 51vh;
   .cont-play{
     position: absolute;
     top:0 ;
@@ -48,8 +50,9 @@
   }
 }
 iframe{
-  height: 51vh;
-  width: 43vw;
+  height: 100%;
+  /*height: 51vh;*/
+  width: 100%;
 
 }
 </style>
