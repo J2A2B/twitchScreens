@@ -28,8 +28,7 @@ app.get('/games', (req, res) => {
 
 app.get('/streams/:name', (req, res) => {
   const name = req.params.name
-  console.log(name)
-    twitch.getStreams({game:name},function(err, body){
+    twitch.getStreams({game:name, limit:100},function(err, body){
       if(err){
         console.log(err);
       }else{
@@ -38,26 +37,15 @@ app.get('/streams/:name', (req, res) => {
     })
 })
 
-// app.get('/chat', (req, res) => {
-//   twitch.getChannelChat({channel:'PyrooTv'},function(err, body){
-//     if (err) {
-//       console.log(err);
-//     }else{
-//       res.json(body)
-//     }
-//   })
-// })
-
-// app.get('/screenOne/:channel', (req, res) => {
-//   //res.send("coucou")
-//     twitch.getChannel(function(err, body){
-//     if (err){
-//       console.log(err);
-//     } else {
-//       res.json(body)
-//     }
-// })
-// })
+app.get('/videos/:channel', (req, res) =>{
+  twitch.getChannelVideos ({channel:name, limit:100},function(err,body){
+    if (err) {
+      console.log(err);
+    }else{
+      res.json(body)
+    }
+  })
+})
 
 app.listen(3000, () => {
   console.log('listening on 3000')
