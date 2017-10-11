@@ -1,6 +1,7 @@
 <template>
   <div class="cont-stream">
-    <ul class="list-stream scrollbar" id="stream-list">
+    <ul class="listStream scrollbar" id="stream-list">
+   <!--    :class="{'streamListShow':isShow, 'streamListHidde': isShow }" -->
       <div class="cont-search" id="search-cont">
         <input type="text" placeholder="search stream" v-model="search" >
         <div class="cont-close" v-on:click="closeListStream"></div>
@@ -42,7 +43,8 @@
   export default {
     name: 'streamList',
     props: {    
-      id: String
+      id: String,
+      class: Boolean
     },
     data () {
       return {
@@ -55,7 +57,8 @@
         changeChatTwo:'',
         changeVideoOne: '',
         changeVideoTwo: '',
-        search:''
+        search:'',
+        isShow: true
       }
     },
     computed: {
@@ -80,9 +83,7 @@
           this.changeChatOne = chatSrc + element.channel.name + "/chat";
           axios.get('http://localhost:3000/videos/' + channel +'/videos')
           .then(response => {
-            console.log(response)
             this.changeVideoOne = channel
-
           })
           .catch(e => {
             this.errors.push(e)
@@ -93,8 +94,11 @@
         }
       },
       closeListStream: function(){
-        document.getElementById('stream-list').style.display = "none";
-      },
+        this.isShow = false
+        // const showStreamList = !showStreamList;
+        // console.log(showStreamList)
+        // document.getElementById('stream-list').style.display = "none";
+      }
     },
     components: {
       streamOne,
@@ -106,7 +110,13 @@
 <style scoped lang="scss">
 .cont-stream{
   display: flex;
-  .list-stream{
+/*  .streamListHidde{
+    display: none;
+  }
+  .streamListShow{
+    display: block;
+  }*/
+  .listStream{
     margin-top: 0;
     width: 12vw;
     position: absolute;

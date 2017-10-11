@@ -10,11 +10,11 @@
         <ul>
           <li v-for="element in games">
             <img :src=element.game.box.large v-on:click="selectStreamList(element)">
-            <button type="button" v-on:click="selectStreamList(element)">{{element.game.name}}</button>
-          </li>
+<!--             <button type="button" v-on:click="selectStreamList(element)">{{element.game.name}}</button>
+ -->          </li>
         </ul>
       </div>
-      <streamList :id="showStreamList"></streamList>
+      <streamList :id="showStreamList" v-if="isShow"></streamList>
     </div>
   </div>
 </template>
@@ -33,8 +33,8 @@
       errors: [],
       changeStreamOne: '',
       changeStreamTwo: '',
-      showStreamList:''
-       //default stream
+      showStreamList:'',
+      isShow:''
      }),
   // Fetches posts when the component is created.
   created () {
@@ -50,13 +50,17 @@
   },
   methods: {
     selectStreamList: function(element){
-      document.getElementById('stream-list').style.display = "block";
-      document.getElementById('search-cont').style.display = "flex";
+      this.isShow=true
+      console.log(isShow)
       const name = element.game.name
       axios.get('http://localhost:3000/streams/' + name)
       .then(response => {
            // JSON responses are automatically parsed.
            this.showStreamList = response.data.streams
+           
+                     // const showStreamList = true;
+           // document.getElementById('stream-list').style.display = "block";
+           document.getElementById('search-cont').style.display = "flex";
           // return this.streams
         })
       .catch(e => {
@@ -73,87 +77,88 @@
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-  .main-cont{
-    background-color: #faf9fa;
-    .main-cont-menu{
-      display: flex;
-      .cont-menu{
-        height:100vh;
-        width: 8vw;
-        background-color: #4b367c;
-        color: white;
-        overflow-y: scroll;
-        ul{
-          margin-top:50px;
-          li{
-            display: flex;
-            flex-direction: column;
-            img{
-              cursor: pointer;
-              width: 100%;
-            }
-            button {
-              border: none;
-              background-color: #4b367c;
-              color: white;
-              padding: 5px;
-              cursor: pointer;
-              text-align: center;
-            }
-            button:hover{
-              color: #898395;
-            }
-          }
-        }
-        .game{
-          width: 8vw;
-          position: fixed;
-          background-color: #1C232A;
+.main-cont{
+  background-color: #faf9fa;
+  .main-cont-menu{
+    display: flex;
+    .cont-menu{
+      height:100vh;
+      width: 8vw;
+      background-color: #4b367c;
+      color: white;
+      overflow-y: scroll;
+      ul{
+        overflow: auto;
+        margin-top:50px;
+        li{
           display: flex;
-          justify-content: center;
-          align-items: center;
-          height: 50px;
-          .game-img{
-            background-color: #EC1313;
-            background: url("../assets/screen.svg") no-repeat center;
-            background-size: cover;
-            margin-right: 5px;
-            margin-left: 5px;
-            height: 15px;
-            width: 15px;
+          flex-direction: column;
+          img{
+            cursor: pointer;
+            width: 100%;
           }
-          p{
-            text-align: center;
-            margin: 0;
-            margin-left: 5px;
-            margin-right: 5px;
+          button {
+            border: none;
+            background-color: #4b367c;
             color: white;
-            font-size: 11px;
+            padding: 5px;
+            cursor: pointer;
+            text-align: center;
+          }
+          button:hover{
+            color: #898395;
           }
         }
       }
-      #scroll-style::-webkit-scrollbar-track
-      {
-        margin-top: 50px;
-        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-        background-color: transparent;
-      }
-      #scroll-style::-webkit-scrollbar
-      {
-        width: 6px;
-        background-color: transparent;
-      }
-      #scroll-style::-webkit-scrollbar-thumb
-      {
-        background-color: #000000;
+      .game{
+        width: 8vw;
+        position: fixed;
+        background-color: #1C232A;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 50px;
+        .game-img{
+          background-color: #EC1313;
+          background: url("../assets/screen.svg") no-repeat center;
+          background-size: cover;
+          margin-right: 5px;
+          margin-left: 5px;
+          height: 15px;
+          width: 15px;
+        }
+        p{
+          text-align: center;
+          margin: 0;
+          margin-left: 5px;
+          margin-right: 5px;
+          color: white;
+          font-size: 11px;
+        }
       }
     }
+    #scroll-style::-webkit-scrollbar-track
+    {
+      margin-top: 50px;
+      -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+      background-color: transparent;
+    }
+    #scroll-style::-webkit-scrollbar
+    {
+      width: 6px;
+      background-color: transparent;
+    }
+    #scroll-style::-webkit-scrollbar-thumb
+    {
+      background-color: #000000;
+    }
   }
-  h1, h2 {
-    font-weight: normal;
-  }
-  ul {
-    list-style-type: none;
-    padding: 0;
-  }
+}
+h1, h2 {
+  font-weight: normal;
+}
+ul {
+  list-style-type: none;
+  padding: 0;
+}
 </style>
