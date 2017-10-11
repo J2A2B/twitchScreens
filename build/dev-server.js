@@ -31,6 +31,50 @@ app.use((req, res, next) => {
         next();
 });
 
+/**
+ * Twitch API
+ * 
+ */
+
+const TwitchApi = require('twitch-api');
+const twitch = new TwitchApi({
+    clientId: '4vanrv34kq4ot0f3qh84ng3qz2m9o7',
+    clientSecret: '1ab8qau7spg5lriibkwno3ulm2xbeg',
+    // redirectUri: 'http://localhost/twitchApi'
+    // scopes: [user_read,channel_read,channel_commercial]
+  });
+
+app.get('/games', (req, res) => {
+    twitch.getTopGames({limit:100},function(err, body){
+      if (err){
+        console.log(err);
+      } else {
+        res.json(body)
+      }
+  })
+})
+
+app.get('/streams/:name', (req, res) => {
+  const name = req.params.name
+    twitch.getStreams({game:name, limit:100},function(err, body){
+      if(err){
+        console.log(err);
+      }else{
+        res.json(body)
+      }
+    })
+})
+
+app.get('/videos/:channel', (req, res) =>{
+  twitch.getChannelVideos ({channel:name, limit:100},function(err,body){
+    if (err) {
+      console.log(err);
+    }else{
+      res.json(body)
+    }
+  })
+})
+
 var devMiddleware = require('webpack-dev-middleware')(compiler, {
   publicPath: webpackConfig.output.publicPath,
   quiet: true
@@ -78,37 +122,11 @@ var readyPromise = new Promise(resolve => {
   _resolve = resolve
 })
 
-
-
 // const router = express.Router();
 // const apiRoutes = new router();
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
-
-// const TwitchApi = require('twitch-api');
-// const twitch = new TwitchApi({
-//     clientId: '4vanrv34kq4ot0f3qh84ng3qz2m9o7',
-//     clientSecret: '1ab8qau7spg5lriibkwno3ulm2xbeg',
-//     redirectUri: 'http://localhost/twitchApi'
-//     // scopes: [user_read,channel_read,channel_commercial]
-//   });
-
-// app.get('/games', function(req,res){ 
-//     res.send("couocu");
-// })
-
-// router.get('/', function(req, res) {
-//     res.send(message : 'coucou')
-// twitch.getTopGames( function(err, body){
-//     if (err){
-//       console.log(err);
-//     } else {
-//       return body
-//     }
-// })
-      
-// });
 
 // app.use('/api', router);
 // apiRoutes.use('/api',apiRoutes);  
@@ -123,7 +141,8 @@ devMiddleware.waitUntilValid(() => {
   _resolve()
 })
 
-var server = app.listen(8080)
+// var server = app.listen(8080)
+var server = app.listen(3000)
 
 module.exports = {
   ready: readyPromise,

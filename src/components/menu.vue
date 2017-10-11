@@ -10,11 +10,12 @@
         <ul>
           <li v-for="element in games">
             <img :src=element.game.box.large v-on:click="selectStreamList(element)">
-<!--             <button type="button" v-on:click="selectStreamList(element)">{{element.game.name}}</button>
- -->          </li>
+            <button type="button" v-on:click="selectStreamList(element)">{{element.game.name}}</button>
+            <p>{{element.viewers}} viewers</p>
+          </li>
         </ul>
       </div>
-      <streamList :id="showStreamList" v-if="isShow"></streamList>
+      <streamList :id="showStreamList" :isShow="showList"></streamList>
     </div>
   </div>
 </template>
@@ -34,11 +35,11 @@
       changeStreamOne: '',
       changeStreamTwo: '',
       showStreamList:'',
-      isShow:''
-     }),
+      showList:false
+    }),
   // Fetches posts when the component is created.
   created () {
-    axios.get('http://localhost:3000/games')
+    axios.get('/games')
     .then(response => {
       // JSON responses are automatically parsed.
       this.games = response.data.top
@@ -50,22 +51,23 @@
   },
   methods: {
     selectStreamList: function(element){
-      this.isShow=true
-      console.log(isShow)
+      // this.isShow=true
+      // console.log(isShow)
       const name = element.game.name
-      axios.get('http://localhost:3000/streams/' + name)
+      axios.get('/streams/' + name)
       .then(response => {
            // JSON responses are automatically parsed.
            this.showStreamList = response.data.streams
-           
+           this.showList = true
+           // document.getElementById('search-cont').style.display = "flex";
                      // const showStreamList = true;
            // document.getElementById('stream-list').style.display = "block";
-           document.getElementById('search-cont').style.display = "flex";
           // return this.streams
         })
       .catch(e => {
         this.errors.push(e)
       })
+
     }
   },
   components: {
@@ -77,6 +79,16 @@
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+h1, h2 {
+  font-weight: normal;
+}
+p{
+  margin: 0;
+}
+ul {
+  list-style-type: none;
+  padding: 0;
+}
 .main-cont{
   background-color: #faf9fa;
   .main-cont-menu{
@@ -93,9 +105,14 @@
         li{
           display: flex;
           flex-direction: column;
+          align-items: center;
           img{
             cursor: pointer;
-            width: 100%;
+            max-width: 95%;
+            transition: all 0.3s;
+          }
+          img:hover  {
+            transform: scale(1.05);
           }
           button {
             border: none;
@@ -107,6 +124,12 @@
           }
           button:hover{
             color: #898395;
+          }
+          p{
+            text-align: center;
+            font-size: 10px;
+            margin-bottom: 5px;
+            color: #f6f6f6;
           }
         }
       }
@@ -129,7 +152,6 @@
         }
         p{
           text-align: center;
-          margin: 0;
           margin-left: 5px;
           margin-right: 5px;
           color: white;
@@ -153,12 +175,5 @@
       background-color: #000000;
     }
   }
-}
-h1, h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
 }
 </style>

@@ -5,10 +5,10 @@
       <div class="play"></div>
     </div> -->
     <iframe :src="this.id" frameborder="0" allowfullscreen="true" scrolling="no" id="myVideo"></iframe>
-    <button type="submit" v-on:click="muteStream">coucou</button>
+<!--     <button type="submit" v-on:click="muteStream">coucou</button> -->
   </div>
 </template>
-<script src= "http://player.twitch.tv/js/embed/v1.js"></script>
+<!-- <script src= "http://player.twitch.tv/js/embed/v1.js"></script> -->
 <script>
   export default {
     name: 'streamOne',
@@ -17,22 +17,22 @@
     },
     data () {
       return {};
-    },
-    methods: {
-      muteStream: function () {
-        const myVideo =  document.getElementById('myVideo')
-        myVideo.pause();
-        // myVideo.muted =true;
-        //        const player = new Twitch.Player("myVideo", options);
-        // myVideo.setVolume(0.5);
-      
-      //  if(myVideo.isMuted()){
-      //   myVideo.unMute()
-      // }else{
-      //   myVideo.mute()
-      // }
     }
-  }
+  //   methods: {
+  //     muteStream: function () {
+  //       const myVideo =  document.getElementById('myVideo')
+  //       myVideo.pause();
+  //       // myVideo.muted =true;
+  //       //        const player = new Twitch.Player("myVideo", options);
+  //       // myVideo.setVolume(0.5);
+      
+  //     //  if(myVideo.isMuted()){
+  //     //   myVideo.unMute()
+  //     // }else{
+  //     //   myVideo.mute()
+  //     // }
+  //   }
+  // }
 }
 </script>
 <style scoped lang="scss">

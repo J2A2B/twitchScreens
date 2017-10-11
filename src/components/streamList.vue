@@ -1,8 +1,8 @@
 <template>
   <div class="cont-stream">
-    <ul class="listStream scrollbar" id="stream-list">
+    <ul class="listStream scrollbar" id="stream-list" v-if="isShow">
    <!--    :class="{'streamListShow':isShow, 'streamListHidde': isShow }" -->
-      <div class="cont-search" id="search-cont">
+      <div class="cont-search" id="search-cont" v-if="isShow">
         <input type="text" placeholder="search stream" v-model="search" >
         <div class="cont-close" v-on:click="closeListStream"></div>
       </div>
@@ -43,8 +43,8 @@
   export default {
     name: 'streamList',
     props: {    
-      id: String,
-      class: Boolean
+      id: '',
+      isShow:''
     },
     data () {
       return {
@@ -58,7 +58,6 @@
         changeVideoOne: '',
         changeVideoTwo: '',
         search:'',
-        isShow: true
       }
     },
     computed: {
@@ -81,7 +80,7 @@
         if (inputTarget == 'inputOne') {
           this.changeStreamOne = src + element.channel.name;
           this.changeChatOne = chatSrc + element.channel.name + "/chat";
-          axios.get('http://localhost:3000/videos/' + channel +'/videos')
+          axios.get('/videos/' + channel +'/videos')
           .then(response => {
             this.changeVideoOne = channel
           })
@@ -94,7 +93,9 @@
         }
       },
       closeListStream: function(){
-        this.isShow = false
+       this.isShow= false
+
+        // this.isShow = false
         // const showStreamList = !showStreamList;
         // console.log(showStreamList)
         // document.getElementById('stream-list').style.display = "none";
@@ -129,7 +130,7 @@
       position: fixed;
       background-color: #17141f;
       width: 12vw;
-      display: none;
+      display: flex;
       justify-content: space-between;
       align-items: center;
       height: 50px;
