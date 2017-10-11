@@ -75,7 +75,7 @@
     methods: {
       selectStream: function (element, inputTarget) {
         const src = 'https://player.twitch.tv/?channel='
-        const chatSrc ="http://www.twitch.tv/"
+        const chatSrc ="https://www.twitch.tv/"
         const channel = element.channel.name
         if (inputTarget == 'inputOne') {
           this.changeStreamOne = src + element.channel.name;
