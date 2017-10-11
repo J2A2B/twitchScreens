@@ -94,7 +94,7 @@
       },
       closeListStream: function(){
        this.isShow= false
-
+       console.log(this.isShow)
         // this.isShow = false
         // const showStreamList = !showStreamList;
         // console.log(showStreamList)
