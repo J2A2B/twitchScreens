@@ -2,11 +2,11 @@
   <div class="main-cont">
     <div class="main-cont-menu">
       <div class="cont-menu scrollbar" id="scroll-style">
-        <div class="game">
+        <a href="https://www.youtube.com/watch?v=wE0uhqaxS_E" target="_blank" class="game">
           <div class="game-img"></div>
-          <p>Twitch Screens</p>
+          <p>TScreens</p>
           <!-- <div class="game-img"></div> -->
-        </div>
+        </a>
         <ul>
           <li v-for="element in games">
             <img :src=element.game.box.large v-on:click="selectStreamList(element)">
@@ -95,7 +95,7 @@ ul {
     display: flex;
     .cont-menu{
       height:100vh;
-      width: 8vw;
+      width: 110px;
       background-color: #4b367c;
       color: white;
       overflow-y: scroll;
@@ -121,6 +121,7 @@ ul {
             padding: 5px;
             cursor: pointer;
             text-align: center;
+            font-size: 10px;
           }
           button:hover{
             color: #898395;
@@ -134,13 +135,15 @@ ul {
         }
       }
       .game{
-        width: 8vw;
+        width: 110px;
         position: fixed;
         background-color: #1C232A;
         display: flex;
         justify-content: center;
         align-items: center;
         height: 50px;
+        text-decoration: none;
+        z-index: 1000;
         .game-img{
           background-color: #EC1313;
           background: url("../assets/screen.svg") no-repeat center;

@@ -66,6 +66,6 @@ app.use(function(req, res) {
 });
 
 
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 8080;
 app.listen(port);
 console.log('server started on '+ port);

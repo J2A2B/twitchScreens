@@ -142,7 +142,7 @@ devMiddleware.waitUntilValid(() => {
 })
 
 // var server = app.listen(8080)
-var server = app.listen(3000)
+var server = app.listen(8080)
 
 module.exports = {
   ready: readyPromise,

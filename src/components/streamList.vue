@@ -65,6 +65,7 @@
         if(!this.id){
           return;
         }
+        console.log(this.id)
         const stream = this.id
         const self=this;
         return stream.filter(function(str){
@@ -134,6 +135,7 @@
       justify-content: space-between;
       align-items: center;
       height: 50px;
+      z-index: 9999;
       .cont-close{
         background: url("../assets/cross.svg") no-repeat center;
         background-size: cover;
@@ -174,6 +176,8 @@
     }
     .cont-button{
       display: flex;
+      margin-top: 5px;
+      margin-bottom: 5px;
       .btn-stream{
         border-style: none;
         border: none;

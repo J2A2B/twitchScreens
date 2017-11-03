@@ -40,8 +40,8 @@
   display: flex;
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
   margin: 5px;
-  width: 45.4vw;
-  height: 51.5vh;
+  width: 46vw;
+  height: 52vh;
   .cont-play{
     position: absolute;
     top:0 ;

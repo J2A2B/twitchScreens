@@ -1,6 +1,8 @@
 <template>
   <div id="app">
     <link rel="shortcut icon" type="image/png" href="./assets/twitch-logo.png"/>
+<!--     <router-link :to="{ name: 'games' }">Games</router-link>
+    <router-link to="/menu">menu</router-link> -->
     <router-view></router-view>
   </div>
 </template>
@@ -21,6 +23,6 @@ export default {
 }
 body{
   margin:0px;
-  overflow: hidden;
+ /* overflow: hidden;*/
 }
 </style>
