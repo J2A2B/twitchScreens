@@ -5,7 +5,6 @@
         <a href="https://www.youtube.com/watch?v=wE0uhqaxS_E" target="_blank" class="game">
           <div class="game-img"></div>
           <p>TScreens</p>
-          <!-- <div class="game-img"></div> -->
         </a>
         <ul>
           <li v-for="element in games">

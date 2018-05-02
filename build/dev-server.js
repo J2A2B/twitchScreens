@@ -33,7 +33,7 @@ app.use((req, res, next) => {
 
 /**
  * Twitch API
- * 
+ *
  */
 
 const TwitchApi = require('twitch-api');
@@ -129,7 +129,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 // app.use('/api', router);
-// apiRoutes.use('/api',apiRoutes);  
+// apiRoutes.use('/api',apiRoutes);
 
 console.log('> Starting dev server...')
 devMiddleware.waitUntilValid(() => {
