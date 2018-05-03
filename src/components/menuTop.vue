@@ -14,7 +14,9 @@
       </label>
       <ul class="main-menu__search__ul">
         <li class="main-menu__search__ul__li" v-if="isShowSearch" v-for="element in searchGame">
-          {{element.game.name}}
+          <router-link :to="{ name: 'game', params: { name: element.game.name }}">
+            {{element.game.name}}
+          </router-link>
         </li>
       </ul>
     </div>
@@ -54,16 +56,16 @@ export default {
       const gameList = this.gameList;
       const self=this;
       return gameList.filter((str) => {
-        if (this.state ==='close') {
-          this.isShowSearch = false;
-          this.search = '';
-        } else {
-          if (self.search.length > 0) {
-            this.isShowSearch = true;
-          } else {
-            this.isShowSearch = false;
-          }
-        }
+        // if (this.state ==='close') {
+          this.isShowSearch = true;
+          // this.search = '';
+        // } else {
+        //   if (self.search.length > 0) {
+        //     this.isShowSearch = true;
+        //   } else {
+        //     this.isShowSearch = false;
+        //   }
+        // }
         return str.game.name.toLowerCase().indexOf(
           self.search.toLowerCase()
         )>=0;

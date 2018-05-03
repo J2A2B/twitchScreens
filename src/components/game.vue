@@ -19,6 +19,7 @@
       </li>
     </ul>
     <span v-if="err.length > 0">{{this.err}}</span>
+    <h2 v-on:click="window.open('urls', 'title', 'height=640,width=960,toolbar=no,menubar=no,scrollbars=no,location=no,status=no')">Click me for a new window</h2>
   </div>
 </template>
 <script>

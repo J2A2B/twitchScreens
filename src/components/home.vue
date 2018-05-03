@@ -1,12 +1,10 @@
 <template>
   <div class="main-cont-games">
-    <div class="cont-search">
-      <div class="icon-search"></div>
-      <input name="searchGame" placeholder="Search a game" v-model="search">
-    </div>
     <ul>
-      <li v-for="element in searchGame">
-        <router-link :to="{ name: 'game', params: { name: element.game.name }}">
+      <li v-for="element in this.$store.state.gameList">
+        <router-link :to="{ name: 'game', params: { name: element.game.name }}"
+          v-on:click="setSelectedGame(element.game.name)"
+        >
           <img :src=element.game.box.large>
           <div class="cont-infos-game">
             <h2>{{element.game.name}}</h2>
@@ -20,25 +18,27 @@
 </template>
 <script>
 import axios from 'axios';
+import { mapState, mapActions } from 'vuex';
+import store from '../store/store';
+import * as type from '../store/mutationTypes/types';
 
 export default {
   name: 'menu',
   data: () => ({
+    state: 'close',
     games: [],
-    search:'',
     errors: []
   }),
-
-  created () {
-    axios.get('/games')
-    .then(response => {
-      this.games = response.data.top;
-    })
-    .catch(e => {
-      this.errors.push(e)
-    })
+  created() {
+    this.getGames()
   },
-
+  methods: {
+    setSelectedGame (value) {
+        this.$store.commit('GET_GAMES', value)
+      },
+    ...mapActions({
+     getGames: 'getGames'}),
+  },
   computed: {
     searchGame: function(){
       if(!this.games){
@@ -53,7 +53,7 @@ export default {
         )>=0;
       });
     }
-  }
+  },
 }
 </script>
 
@@ -87,20 +87,58 @@ button {
     background-color: #4B397A;
     position: fixed;
     z-index: 999;
-    .icon-search{
-      height: 28px;
-      width: 25px;
-      padding: 2px;
-      background: url("../assets/search.svg") no-repeat center;
-      background-size: 90%;
-      background-color: white;
-    }
-    input{
-      height: 30px;
-      width: 30%;
-      padding-left: 5px;
-      border: none;
-      outline: none;
+    label{
+      position: relative;
+      display: inline-block;
+      background-color: #fff;
+      padding: 5px 12px;
+      transition: all 0.5s ease;
+      border-radius: 0;
+      box-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+      &::after{
+        content: '';
+        display: block;
+        height: 2px;
+        width: 80%;
+        background-color: #5E19FF;
+        transition: all 0.5s ease 0.5s;
+      }
+      input{
+        transition: width 1s ease, opacity 0.5s ease 0.5s;
+        opacity: 1;
+        width: 180px;
+        height: 25px;
+        border: 0;
+        outline: none;
+        color: darken(#5E19FF, 25)
+      }
+      i{
+        position: absolute;
+        top: 11px;
+        right: 11px;
+        color: #333;
+        cursor: pointer;
+      }
+      &[data-state="close"]{
+        border-radius: 30px;
+        padding: 5px 5px;
+        transition: all 1s ease;
+        &::after{
+          width: 0%;
+          transition: all 0.3s ease;
+        }
+        i{
+          pointer-events: none;
+        }
+        input{
+          width: 28px;
+          height: 25px;
+          opacity:0;
+          cursor: pointer;
+          transition: opacity 0.5s ease, width 1s ease;
+          -webkit-appearance:none
+        }
+      }
     }
   }
   ul{
