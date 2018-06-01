@@ -1,30 +1,18 @@
 <template>
   <div class="main-menu">
     <div class="main-menu__search">
-      <label :data-state="state" for="search">
-        <input
-        class="main-menu__search__input"
-        name="searchGame"
-        placeholder="Search a game"
-        v-model="search"
-        @click="state = 'open'"
-        @blur="state='close'"
-        >
-        <i class="fa fa-search" @click="" aria-hidden="true"></i>
-      </label>
-      <ul class="main-menu__search__ul">
-        <li class="main-menu__search__ul__li" v-if="isShowSearch" v-for="element in searchGame">
-          <router-link :to="{ name: 'game', params: { name: element.game.name }}">
-            {{element.game.name}}
-          </router-link>
-        </li>
-      </ul>
+      <globalSearch :searchProps="searchProps"></globalSearch>
     </div>
+
   </div>
 </template>
 
 <script>
 import axios from 'axios';
+import { mapState, mapActions } from 'vuex';
+import store from '../store/store';
+import * as type from '../store/mutationTypes/types';
+import globalSearch from './global-search.vue';
 
 export default {
   name: 'menuTop',
@@ -35,18 +23,22 @@ export default {
     return {
       state: 'close',
       isShowSearch: false,
+      gameSelected: '',
       search:'',
-      gameList: []
+      gameList: [],
+      searchProps: 'game'
     }
   },
-  created () {
-    axios.get('/games')
-    .then(response => {
-      this.gameList = response.data.top;
-    })
-    .catch(e => {
-      this.errors.push(e)
-    })
+
+  methods: {
+    selectGame (value) {
+      this.$store.commit('SET_GAME', value)
+      this.gameSelected = value
+      this.getStreams()
+    },
+    ...mapActions({
+     getStreams: 'getStreams'
+   })
   },
   computed: {
     searchGame: function(){
@@ -71,14 +63,16 @@ export default {
         )>=0;
       });
     }
+  },
+  components: {
+    globalSearch
   }
-
 }
 </script>
 <style scoped lang="scss">
 .main-menu{
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 
   &__search{
@@ -88,59 +82,6 @@ export default {
     align-items: center;
     position: relative;
     margin-bottom: 10px;
-    label{
-      position: relative;
-      display: inline-block;
-      background-color: #fff;
-      padding: 5px 12px;
-      transition: all 0.5s ease;
-      border-radius: 0;
-      box-shadow: 1px 1px 5px rgba(0,0,0,0.5);
-      &::after{
-        content: '';
-        display: block;
-        height: 2px;
-        width: 80%;
-        background-color: #5E19FF;
-        transition: all 0.5s ease 0.5s;
-      }
-      input{
-        transition: width 1s ease, opacity 0.5s ease 0.5s;
-        opacity: 1;
-        width: 180px;
-        height: 25px;
-        border: 0;
-        outline: none;
-        color: darken(#5E19FF, 25)
-      }
-      i{
-        position: absolute;
-        top: 11px;
-        right: 11px;
-        color: #333;
-        cursor: pointer;
-      }
-      &[data-state="close"]{
-        border-radius: 30px;
-        padding: 5px 5px;
-        transition: all 1s ease;
-        &::after{
-          width: 0%;
-          transition: all 0.3s ease;
-        }
-        i{
-          pointer-events: none;
-        }
-        input{
-          width: 28px;
-          height: 25px;
-          opacity:0;
-          cursor: pointer;
-          transition: opacity 0.5s ease, width 1s ease;
-          -webkit-appearance:none
-        }
-      }
-    }
     &__ul{
       width: 100%;
       min-width: 200px;
@@ -157,6 +98,9 @@ export default {
         color: #222222;
       }
     }
+  }
+  .manage-stream{
+
   }
 }
 </style>

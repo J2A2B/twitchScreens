@@ -75,6 +75,17 @@ app.get('/videos/:channel', (req, res) =>{
   })
 })
 
+app.get('/search/games', (req, res) => {
+  console.log(twitch)
+  twitch.searchGames ({query:query},function(err,body){
+    if (err) {
+      console.log(err);
+    }else{
+      res.json(body)
+    }
+  })
+})
+
 var devMiddleware = require('webpack-dev-middleware')(compiler, {
   publicPath: webpackConfig.output.publicPath,
   quiet: true
