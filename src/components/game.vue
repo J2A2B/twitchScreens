@@ -19,12 +19,12 @@
         </div>
         <div class="container__main-game__cont-right__controls" v-if="this.$store.state.streamListPlaying.length > 0">
           <div @click="muteAllStream" class="container__main-game__cont-right__controls__button">
-            <i class="fas fa-volume-up" v-if="!this.$store.state.allStreamAreMuted"></i>
+            <i class="fas fa-volume-up sound" v-if="!this.$store.state.allStreamAreMuted"></i>
             <i class="fas fa-volume-off" v-if="this.$store.state.allStreamAreMuted"></i>
           </div>
           <div @click="pauseAllStream" class="container__main-game__cont-right__controls__button">
-            <i class="far fa-play-circle" v-if="!this.$store.state.allStreamArePaused"></i>
-            <i class="far fa-pause-circle" v-if="this.$store.state.allStreamArePaused"></i>
+            <i class="fas fa-play" v-if="this.$store.state.allStreamArePaused"></i>
+            <i class="fas fa-pause" v-if="!this.$store.state.allStreamArePaused"></i>
           </div>
           <div @click="removeAllStream" class="container__main-game__cont-right__controls__button">
             <i class="far fa-times-circle"></i>
@@ -79,6 +79,7 @@ export default {
     //   this.$store.commit('SET_GAME', this.$route.params.name)
     // }
   },
+
   created(){
   //   this.$store.dispatch(
   //     {type: 'handleNewGameSelected',
@@ -86,6 +87,7 @@ export default {
   //   )
   //
   // },
+  console.log(this.$route.params.name)
   this.handleNewGameSelected({game: this.$route.params.name})
   // this.handleNewGameSelected({game: })
 },
@@ -216,6 +218,9 @@ export default {
             align-items: center;
             font-size: 24px;
             cursor: pointer;
+            .sound{
+              animation: moveSound 1s linear infinite;
+            }
             i{
               width: 30px;
             }
@@ -280,6 +285,15 @@ export default {
   width: calc(100% + 300px);
   ul{
     width: 100%;
+  }
+}
+
+@keyframes moveSound {
+  0% {
+        transform: scale(1.05);
+  }
+  100% {
+        transform: scale(0.9);
   }
 }
 </style>

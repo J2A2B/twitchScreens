@@ -6,6 +6,7 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     gameList: [],
+    gameListSlug: [],
     streamList: [],
     gameSelected: '',
     streamListPlaying: [],
@@ -14,6 +15,11 @@ const store = new Vuex.Store({
   },
   mutations: {
     GET_GAMES (state, payload) {
+      state.gameListSlug = payload
+      // const slug = require('slug')
+      // for (let i = 0; i < state.gameListSlug.length; i++) {
+      //   state.gameListSlug[i].game.name = slug(state.gameListSlug[i].game.name)
+      // }
       state.gameList = payload
     },
     GET_STREAMS (state, payload) {
@@ -36,8 +42,12 @@ const store = new Vuex.Store({
     },
     SET_STREAM_REMOVE_ONE (state, payload) {
       const index = state.streamListPlaying.indexOf(payload)
+      // console.log('STREAMMMM ', state.streamListPlaying)
+      // console.log('INDEXXX ', index)
+      // console.log('STREAMREMOVE', state.streamListPlaying[index])
       if (index !== -1) {
         state.streamListPlaying.splice(index, 1)
+        // console.log('NEWWWWWWW ',state.streamListPlaying)
       }
     },
     SET_STREAM_PAUSED (state) {
@@ -48,6 +58,7 @@ const store = new Vuex.Store({
     getGames ({ commit }) {
       return axios.get('/games')
         .then(response => {
+          console.log(response.data.top)
           commit('GET_GAMES', response.data.top)
         })
         .catch(err => {
@@ -70,9 +81,6 @@ const store = new Vuex.Store({
     removeOneStreamSelected ({ commit, dispatch }, { stream }) {
       commit('SET_STREAM_REMOVE_ONE', stream)
     }
-    // muteAllStream ({ commit, state }) {
-    //
-    // }
   }
 })
 

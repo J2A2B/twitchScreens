@@ -63,6 +63,7 @@ export default {
   },
   methods: {
     setSelectedGame (game) {
+      console.log(game)
       this.handleNewGameSelected({game: game})
     },
     ...mapActions({
@@ -72,7 +73,6 @@ export default {
   },
   computed: {
     results: function () {
-      console.log(this.search)
       var search = this.search;
       var monresultatapi = 'call api ici avec search en param ('+ search +')';
       return monresultatapi;

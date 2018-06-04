@@ -17,9 +17,9 @@
       </i>
     </label>
     <ul
-    class="main-search__cont-search__ul">
+      class="main-search__cont-search__ul">
     <li class="main-search__cont-search__ul__li"
-    v-for="item in results"
+      v-for="item in results"
     >
     <router-link
     @click.native="setSelectedGame(item.game.name), state='open'"

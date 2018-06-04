@@ -9,7 +9,7 @@
     <router-view></router-view>
   </div>
 </template>
-<script src="https://embed.twitch.tv/embed/v1.js"></script>
+<!-- <script src="https://embed.twitch.tv/embed/v1.js"></script> -->
 <script>
 export default {
   name: 'app'

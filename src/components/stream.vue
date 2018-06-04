@@ -2,6 +2,7 @@
   <span>
     <div ref="ref" class="main-stream"></div>
     {{controlAll}}
+    {{this.videoName}}
     <span style="background:red" @click="removeOne">REMOVE</span>
     <!-- <i class="fas fa-gamepad"></i>
     <i class="fas fa-gamepad"></i>
@@ -29,6 +30,7 @@ export default {
   },
 
   created(){
+    console.log(this.videoName)
     Vue.loadScript('https://player.twitch.tv/js/embed/v1.js')
     .then(() => {
       const options = {
