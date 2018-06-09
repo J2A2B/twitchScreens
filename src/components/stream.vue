@@ -1,8 +1,8 @@
 <template>
-  <span>
+  <span :videoName="videoName">
     <div ref="ref" class="main-stream"></div>
     {{controlAll}}
-    {{this.videoName}}
+    {{videoName}}
     <span style="background:red" @click="removeOne">REMOVE</span>
     <!-- <i class="fas fa-gamepad"></i>
     <i class="fas fa-gamepad"></i>

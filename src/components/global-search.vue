@@ -2,13 +2,19 @@
   <div class="main-search">
     <div class="main-search__cont-search">
       <label :data-state="state" for="search">
+        <!-- <input
+          class="inputText" required
+        > -->
+
         <input
-        class="main-menu__search__input"
+        class="inputText"
         name="searchGame"
-        placeholder="Search a game"
+
         v-model="search"
         @click="state = 'open'"
+        required
         >
+        <span class="floating-label" required>{{this.$store.state.gameSelected}}</span>
         <i
         class="fa fa-search"
         aria-hidden="true"
@@ -18,6 +24,12 @@
     </label>
     <ul
       class="main-search__cont-search__ul">
+      <li class="main-search__cont-search__ul__li first" v-if="search.length > 0"
+      >
+      <!-- <img v-bind:src="item.game.box.small" alt=""/> -->
+      <span>{{this.$store.state.gameSelected}}</span>
+      <i class="fas fa-check"></i>
+      </li>
     <li class="main-search__cont-search__ul__li"
       v-for="item in results"
     >
@@ -42,18 +54,23 @@ import * as type from '../store/mutationTypes/types';
 export default {
   name: 'global-search',
   props: {
-    searchProps: String
+    isOpen: Boolean
   },
   data () {
     return {
       search:'',
       searchedGames: [],
       state: 'close',
-      isShowList: true
+      isShowList: true,
+      noResult: false
     }
   },
   created() {
     this.getGames()
+    if (this.isOpen) {
+      this.state = 'open'
+      // this.search = this.$store.state.gameSelected
+    }
     // this.getStreams()
   },
   methods: {
@@ -77,13 +94,14 @@ export default {
         "Client-ID": '4vanrv34kq4ot0f3qh84ng3qz2m9o7'
       }
       if (search.length > 0 && this.state === 'open') {
-        const games = this.$store.state.gameList
-        const self=this
-        return games.filter((str) => {
-          return str.game.name.toLowerCase().indexOf(
-            self.search.toLowerCase()
-          )>=0;
-        })
+          const games = this.$store.state.gameList
+          const self = this
+          return games.filter((str) => {
+            // return
+            return str.game.name.toLowerCase().indexOf(
+              self.search.toLowerCase()
+              ) >= 0
+          })
       }
     }
   }
@@ -91,8 +109,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
 .main-search{
-  margin-right: 40px;
+  // margin-right: 40px;
   &__cont-search{
     position: relative;
     display: flex;
@@ -117,7 +136,7 @@ export default {
       input{
         transition: width 0.5s ease, opacity 0.5s ease 0.5s;
         opacity: 1;
-        width: 252px;
+        width: 235px;
         height: 25px;
         border: 0;
         outline: none;
@@ -125,7 +144,7 @@ export default {
       }
       i{
         position: absolute;
-        top: 11px;
+        top: 19px;
         right: 11px;
         color: #333;
         cursor: pointer;
@@ -152,8 +171,8 @@ export default {
       }
     }
     &__ul{
-      margin-top: 42px;
-      background-color: rgba(250, 250, 250, 0.8);
+      margin-top: 53px;
+      background-color: rgba(250, 250, 250, 0.95);
       color: #222222;
       position: absolute;
       list-style: none;
@@ -162,8 +181,29 @@ export default {
       overflow-y: scroll;
       border-radius: 2px;
       text-decoration: none;
+      .first{
+        position: fixed;
+        border: 1px solid #00C29A;
+        font-weight: bold;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        cursor: default;
+        width: 245px;
+        cursor: pointer;
+        padding: 5px;
+        padding-left: 10px;
+        left: 15px;
+        background-color: rgba(250, 250, 250, 0.95);
+      }
+      .fa-check{
+        color: #00C29A;
+      }
+      &__li:nth-child(2){
+        margin-top: 40px;
+      }
       &__li{
-        width: 264px;
+        width: 245px;
         cursor: pointer;
         padding: 5px;
         padding-left: 10px;
@@ -183,9 +223,37 @@ export default {
       }
       &__li:hover{
         list-style: none;
-        background-color: rgba(255, 255, 255, 0.8);
+        background-color: rgba(250, 250, 250, 0.95);
       }
     }
   }
+  input:focus ~ .floating-label,
+  input:not(:focus):valid ~ .floating-label{
+    top: 8px;
+    bottom: 10px;
+    left: 20px;
+    font-size: 11px;
+    opacity: 1;
+  }
+  span{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 230px;
+  }
+  .inputText {
+    padding-top: 10px;
+    font-size: 14px;
+    height: 30px;
+  }
+
+  .floating-label {
+    position: absolute;
+    pointer-events: none;
+    left: 20px;
+    top: 18px;
+    transition: 0.2s ease all;
+  }
 }
+
 </style>

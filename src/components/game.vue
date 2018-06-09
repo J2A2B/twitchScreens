@@ -2,10 +2,11 @@
   <div class="container" v-bind:class="{ 'container-full': !showGames }">
     <div class="container__main-game">
         <div class="container__main-game__header left">
-          <div class="container__main-game__header__game" @click="showGames=!showGames">
+          <!-- <div class="container__main-game__header__game" @click="showGames=!showGames">
             <i class="fas fa-gamepad"></i>
             <span class="container__main-game__header__game__title">{{this.$store.state.gameSelected}}</span>
-          </div>
+          </div> -->
+          <globalSearch :isOpen="true"></globalSearch>
         </div>
         <div class="container__main-game__cont-right">
           <div class="container__main-game__cont-right__header right">
@@ -32,9 +33,9 @@
         </div>
 
     </div>
-    <streamList :showGames="showGames"  :list="streamList"></streamList>
-    <ul class="container__ul" v-bind:class="{ 'container-full__ul-open': !showGames }">
-      <li class="container__ul__li" v-for="element in this.$store.state.streamListPlaying">
+    <streamList :showGames="showGames" :list="streamList"></streamList>
+    <ul class="container__ul" :class="{ 'container-full__ul-open': !showGames }">
+      <li class="container__ul__li" v-for="element in this.$store.state.streamListPlaying" :class="{ 'hideitmotherfucker': element === 'undefined' }">
         <stream :videoName="element"></stream>
       </li>
     </ul>
@@ -45,6 +46,7 @@ import axios from 'axios';
 import menuTop from './menuTop.vue';
 import streamList from './streamList.vue';
 import stream from './stream.vue';
+import globalSearch from './global-search.vue';
 
 import { mapState, mapActions } from 'vuex';
 import store from '../store/store';
@@ -138,12 +140,17 @@ export default {
   components: {
     menuTop,
     streamList,
-    stream
+    stream,
+    globalSearch
   }
 }
 </script>
 
 <style scoped lang="scss">
+
+.hideitmotherfucker{
+  display: none;
+}
 .container{
   display: flex;
 

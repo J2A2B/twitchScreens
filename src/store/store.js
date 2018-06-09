@@ -46,8 +46,9 @@ const store = new Vuex.Store({
       // console.log('INDEXXX ', index)
       // console.log('STREAMREMOVE', state.streamListPlaying[index])
       if (index !== -1) {
-        state.streamListPlaying.splice(index, 1)
-        // console.log('NEWWWWWWW ',state.streamListPlaying)
+        // state.streamListPlaying = []
+        state.streamListPlaying.splice(index, 1, 'undefined')
+        // state.streamListPlaying[index] = 'undefined'
       }
     },
     SET_STREAM_PAUSED (state) {

@@ -2,11 +2,19 @@
   <div class="main-stream" v-bind:class="{ 'main-stream-show': showGames }">
     <ul class="main-stream__ul">
       <div class="main-stream__ul__select" @click="showListSelect()">
-        <div class="main-stream__ul__select__placeholder">
+        <!-- <div class="main-stream__ul__select__placeholder">
           <span>{{sortElement}}</span>
           <i class="fas fa-chevron-down" v-bind:class="{ 'chevronUp': showList }"></i>
+        </div> -->
+        <div class="main-stream__ul__select__viewers" @click="selectSort('Viewers')" v-bind:class="{ 'sort': sortStream === false }">
+          <i class="fas fa-eye"></i>
+          <span>Viewers</span>
         </div>
-        <ul class="main-stream__ul__select__ul" v-bind:class="{ 'show-list': showList }">
+        <div class="main-stream__ul__select__alpha" @click="selectSort('Alphabetical')" v-bind:class="{ 'sort': sortStream === true }">
+          <i class="fas fa-sort-alpha-down"></i>
+          <span>Alphabetical</span>
+        </div>
+        <!-- <ul class="main-stream__ul__select__ul" v-bind:class="{ 'show-list': showList }">
           <li class="main-stream__ul__select__ul__li" @click="selectSort('Viewers')">
             <i class="fas fa-eye"></i>
             <span>Viewers number</span>
@@ -15,7 +23,7 @@
             <i class="fas fa-sort-alpha-down"></i>
             <span>Alphabetical</span>
           </li>
-        </ul>
+        </ul> -->
       </div>
       <!-- <input
       class="main-stream__ul__input"
@@ -58,8 +66,7 @@ export default {
   data: () => ({
     search:'',
     videoSelected: [],
-    showList: false,
-    sortElement: 'Sort stream',
+    sortStream: false,
     err:'',
     // player : 'new window.Twitch.Player("twitch-embed", options)'
   }),
@@ -91,7 +98,10 @@ export default {
     selectSort (sortEl){
 
       this.sortElement = sortEl
+      console.log(sortEl)
       if (sortEl === 'Alphabetical') {
+        console.log(this.sortStream)
+        this.sortStream = true
         function compare(a, b) {
           if (a.channel.name < b.channel.name)
           return -1;
@@ -102,6 +112,7 @@ export default {
         console.log(this.$store.state.streamList.sort(compare))
         return this.$store.state.streamList.sort(compare);
       } else if (sortEl === 'Viewers') {
+        this.sortStream = false
         function compare(x, y) {
           return y.viewers - x.viewers;
         }
@@ -209,67 +220,49 @@ export default {
     //   padding: 10px;
     // }
     &__select{
-      color: black;
-      position: relative;
-      padding: 10px;
-      padding-bottom: 2px;
-      cursor: pointer;
-      &__placeholder{
+      display: flex;
+      background-color: red;
+      margin-bottom: 40px;
+      &__viewers, &__alpha {
+        height: 40px;
+        width: 50%;
+        background: white;
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
+        color: black;
         align-items: center;
-        border: 1px solid #5E19FF;
-        padding: 5px;
-        padding-left: 10px;
-        padding-right: 10px;
-        border-radius: 3px;
-        background: #f1f1f1;
-
+        border-bottom: 1px solid #5E19FF;
+        border-right: 1px solid #5E19FF;
+        cursor: pointer;
+        i{
+          margin-right: 10px;
+        }
+      }
+      &__viewers:hover, &__alpha:hover{
+        background-color: #5E19FF;
+        color: white;
+        border: 1px, solid, white;
+        i{
+          color: white;
+        }
+      }
+      &__viewers{
+        border-left: 1px solid #5E19FF;
+      }
+      &__alpha{
+      }
         i{
           transition: all 0.3s ease;
           color: #5E19FF;
         }
-      }
-      &__ul{
-        height: 0px;
-        overflow: hidden;
-        padding-left: 10px;
-        padding-left: 0px;
-        width: 260px;
-        &__li{
-          padding: 10px;
-          padding-top: 5px;
-          padding-bottom: 5px;
-          list-style: none;
-          height: 30px;
-          display: flex;
-          align-items: center;
-          i{
-            margin-right: 10px;
-            color: #5E19FF;
-          }
-        }
-        &__li:hover{
-          background-color: #5E19FF;
-          color: white;
-        }
-        &__li:hover i{
+      .sort{
+        background-color: #5E19FF;
+        color: white;
+        border: 1px, solid, white;
+        i{
           color: white;
         }
       }
-      .show-list{
-        position: absolute;
-        height: 80px;
-        border: 1px solid #5E19FF;
-        border-top: none;
-        background: #f1f1f1;;
-        width:259px;
-      }
-      .chevronUp{
-        transform: rotate(180deg);
-        transition: all 0.3s ease;
-      }
-
     }
     &__li{
       cursor: pointer;
