@@ -10,6 +10,7 @@ const store = new Vuex.Store({
     streamList: [],
     gameSelected: '',
     streamListPlaying: [],
+    showStreamList: true,
     allStreamAreMuted: false,
     allStreamArePaused: false
   },
@@ -42,17 +43,16 @@ const store = new Vuex.Store({
     },
     SET_STREAM_REMOVE_ONE (state, payload) {
       const index = state.streamListPlaying.indexOf(payload)
-      // console.log('STREAMMMM ', state.streamListPlaying)
-      // console.log('INDEXXX ', index)
-      // console.log('STREAMREMOVE', state.streamListPlaying[index])
       if (index !== -1) {
-        // state.streamListPlaying = []
         state.streamListPlaying.splice(index, 1, 'undefined')
-        // state.streamListPlaying[index] = 'undefined'
       }
     },
     SET_STREAM_PAUSED (state) {
       state.allStreamArePaused = !state.allStreamArePaused
+    },
+    SHOW_LIST_STREAM (state) {
+      console.log(state.showStreamList)
+      state.showStreamList = !state.showStreamList
     }
   },
   actions: {

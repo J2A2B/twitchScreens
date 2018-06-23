@@ -50,46 +50,23 @@ export default {
   name: 'menu',
   data () {
     return {
-      state: 'close',
       searchProps: 'game',
-      games: [],
       errors: [],
-      search:'',
       show: false
     }
   },
   created() {
     this.getGames()
+    this.$store.state.gameSelected = ''
   },
   methods: {
     setSelectedGame (game) {
-      console.log(game)
       this.handleNewGameSelected({game: game})
     },
     ...mapActions({
       getGames: 'getGames',
       handleNewGameSelected: 'handleNewGameSelected'
     })
-  },
-  computed: {
-    results: function () {
-      var search = this.search;
-      var monresultatapi = 'call api ici avec search en param ('+ search +')';
-      return monresultatapi;
-    }
-    // searchGame: function(){
-    //   if(!this.games){
-    //     return;
-    //   }
-    //   const games = this.games;
-    //   const self=this;
-    //
-    //   return games.filter((str) => {
-    //     return str.game.name.toLowerCase().indexOf(
-    //       self.search.toLowerCase()
-    //     )>=0;
-    //   });
-    // }
   },
   components: {
     globalSearch
@@ -142,21 +119,6 @@ button {
         left: -25px;
       }
     }
-    // &__title:hover .twitch, .screens{
-    //   transition: all 0.5s;
-    //   width:50px;
-    //   margin-right: 60px;
-    // }
-    // &__title:hover .twitch:after{
-    //   opacity: 1;
-    //   left: 0px;
-    // }
-    //
-    // &__title:hover .screens:after{
-    //   opacity: 1;
-    //   left: 0px;
-    //   margin-left:0px;
-    // }
     .hide{
       opacity: 0;
       position: relative;
@@ -200,34 +162,6 @@ button {
       left: 0px;
       transition: all 0.4s;
     }
-    // .w:after {
-    //   content:"w";
-    //   position: relative;
-    //   opacity: 0;
-    //   left: -10px;
-    //   transition: all 0.1s;
-    // }
-    // .t:after {
-    //   content:"i";
-    //   position: relative;
-    //   opacity: 0;
-    //   left: -10px;
-    //   transition: all 0.2s;
-    // }
-    // .screens:after {
-    //   content:"creens";
-    //   position: relative;
-    //   margin-left:40px;
-    //   opacity: 0;
-    //   left: -10px;
-    //   transition: all 0.3s;
-    // }
-
-    // .twitch, .screens{
-    //   transition: all 0.5s;
-    //   margin-right: 5px;
-    //   width:15px;
-    // }
     .line{
       width: 20px;
       bottom:0;

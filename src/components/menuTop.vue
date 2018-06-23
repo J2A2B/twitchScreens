@@ -1,7 +1,6 @@
 <template>
   <div class="main-menu">
     <div class="main-menu__search">
-      <!-- <globalSearch :searchProps="searchProps"></globalSearch> -->
     </div>
 
   </div>

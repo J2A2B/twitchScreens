@@ -1,15 +1,12 @@
 <template>
-  <span :videoName="videoName">
-    <div ref="ref" class="main-stream"></div>
+  <span :videoName="videoName" v-if="videoName !== 'undefined'">
+    <div ref="ref" class="main-stream">
+      <div class="main-stream__remove" @click="removeOne">
+        <i class="fas fa-times"></i>
+      </div>
+    </div>
     {{controlAll}}
-    {{videoName}}
-    <span style="background:red" @click="removeOne">REMOVE</span>
-    <!-- <i class="fas fa-gamepad"></i>
-    <i class="fas fa-gamepad"></i>
-    <i class="fas fa-gamepad"></i>
-    <i class="fas fa-gamepad"></i> -->
   </span>
-  <!-- <iframe class="main-stream" :src="videoName" width="100px" height="100px"></iframe> -->
 </template>
 <script>
 import axios from 'axios';
@@ -30,7 +27,6 @@ export default {
   },
 
   created(){
-    console.log(this.videoName)
     Vue.loadScript('https://player.twitch.tv/js/embed/v1.js')
     .then(() => {
       const options = {
@@ -102,5 +98,23 @@ export default {
     .main-stream iframe{
       width: 100%;
       height: calc(50vh - 60px);
+    }
+    .main-stream {
+      cursor: pointer;
+      position: relative;
+      &__remove {
+        position: absolute;
+        right:0px;
+        top: 0px;
+        background: white;
+        height: 20px;
+        width: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        i{
+          color: red;
+        }
+      }
     }
 </style>

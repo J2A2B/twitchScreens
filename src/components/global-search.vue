@@ -2,48 +2,35 @@
   <div class="main-search">
     <div class="main-search__cont-search">
       <label :data-state="state" for="search">
-        <!-- <input
-          class="inputText" required
-        > -->
-
-        <input
-        class="inputText"
+        <input class="inputText"
         name="searchGame"
-
         v-model="search"
         @click="state = 'open'"
-        required
-        >
+        required >
         <span class="floating-label" required>{{this.$store.state.gameSelected}}</span>
-        <i
-        class="fa fa-search"
+        <i class="fa fa-search"
         aria-hidden="true"
-        @click="state='close', search=''"
-        >
-      </i>
-    </label>
-    <ul
-      class="main-search__cont-search__ul">
-      <li class="main-search__cont-search__ul__li first" v-if="search.length > 0"
-      >
-      <!-- <img v-bind:src="item.game.box.small" alt=""/> -->
-      <span>{{this.$store.state.gameSelected}}</span>
-      <i class="fas fa-check"></i>
-      </li>
-    <li class="main-search__cont-search__ul__li"
-      v-for="item in results"
-    >
-    <router-link
-    @click.native="setSelectedGame(item.game.name), state='open'"
-    :to="{ name: 'game', params: { name: item.game.name }}"
-    >
-    <img v-bind:src="item.game.box.small" alt=""/>
-    <span>{{item.game.name}}</span>
-  </router-link>
-</li>
-</ul>
-</div>
-</div>
+        @click="state='close', search=''" >
+        </i>
+      </label>
+      <ul class="main-search__cont-search__ul">
+        <li class="main-search__cont-search__ul__li first"
+          v-if="search.length > 0 && this.$store.state.gameSelected.length > 0">
+          <span>{{this.$store.state.gameSelected}}</span>
+          <i class="fas fa-check"></i>
+        </li>
+        <li class="main-search__cont-search__ul__li"
+        v-for="item in results" >
+          <router-link
+          @click.native="setSelectedGame(item.game.name), state='open'"
+          :to="{ name: 'game', params: { name: item.game.name }}">
+            <img v-bind:src="item.game.box.small" alt=""/>
+            <span>{{item.game.name}}</span>
+          </router-link>
+        </li>
+      </ul>
+    </div>
+  </div>
 </template>
 <script>
 import axios from 'axios';
@@ -69,35 +56,24 @@ export default {
     this.getGames()
     if (this.isOpen) {
       this.state = 'open'
-      // this.search = this.$store.state.gameSelected
     }
-    // this.getStreams()
   },
   methods: {
     setSelectedGame(game) {
-      console.log('game',game)
-      // this.getGame()
-      // this.getStreams()
       this.handleNewGameSelected({game: game})
     },
     ...mapActions({
       getGames: 'getGames',
-      handleNewGameSelected: 'handleNewGameSelected',
-      getStreams: 'getStreams'
+      handleNewGameSelected: 'handleNewGameSelected'
     })
   },
   computed: {
     results: function () {
       var search = this.search;
-      const headers = {
-        Authorization: 'OAuth cfabdegwdoklmawdzdo98xt2fo512y',
-        "Client-ID": '4vanrv34kq4ot0f3qh84ng3qz2m9o7'
-      }
       if (search.length > 0 && this.state === 'open') {
           const games = this.$store.state.gameList
           const self = this
           return games.filter((str) => {
-            // return
             return str.game.name.toLowerCase().indexOf(
               self.search.toLowerCase()
               ) >= 0
@@ -111,7 +87,6 @@ export default {
 <style scoped lang="scss">
 
 .main-search{
-  // margin-right: 40px;
   &__cont-search{
     position: relative;
     display: flex;
@@ -239,7 +214,7 @@ export default {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    width: 230px;
+    width: 200px;
   }
   .inputText {
     padding-top: 10px;
