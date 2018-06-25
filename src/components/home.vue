@@ -88,6 +88,7 @@ export default {
   },
   methods: {
     setSelectedGame (game) {
+      this.$store.commit('ALWAYS_OPEN_LIST_STREAM')
       this.handleNewGameSelected({game: game})
     },
     ...mapActions({

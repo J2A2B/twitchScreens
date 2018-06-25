@@ -116,6 +116,7 @@ export default {
       this.$store.commit('ALWAYS_OPEN_LIST_STREAM')
     },
     setSelectedGame(game) {
+      this.$store.commit('ALWAYS_OPEN_LIST_STREAM')
       this.$router.push('/game/'+ game);
       this.handleNewGameSelected({game: game})
     },
@@ -367,7 +368,7 @@ export default {
             font-size: 24px;
             cursor: pointer;
             .sound{
-              animation: moveSound 1s linear infinite;
+              animation: moveSound 1s linear 3;
             }
             i{
               width: 30px;

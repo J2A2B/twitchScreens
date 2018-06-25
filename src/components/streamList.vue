@@ -13,7 +13,7 @@
           @click="selectSort('Alphabetical')"
           v-bind:class="{ 'sort': sortStream === true }">
           <i class="fas fa-sort-alpha-down"></i>
-          <span>Alphabetical</span>
+          <span>Alpha</span>
         </div>
       </div>
       <li class="main-stream__ul__li"
@@ -111,7 +111,7 @@ export default {
     width: 10px;
 }
 ::-webkit-scrollbar-track {
-  margin-top: 40px;
+  // margin-top: 40px;
     background: #f1f3f1;
 }
 ::-webkit-scrollbar-thumb {
@@ -142,13 +142,14 @@ export default {
     overflow: scroll;
     padding-top: 40px;
     &__select{
+      z-index: 9;
       position: fixed;
       display: flex;
       top: 67px;
       width: 292px;
       &__viewers, &__alpha {
         height: 40px;
-        width: 50%;
+        width: 120px;
         background: white;
         display: flex;
         justify-content: center;
@@ -173,6 +174,7 @@ export default {
         border-left: 1px solid #5E19FF;
       }
       &__alpha{
+        // border-right: none;
       }
         i{
           transition: all 0.3s ease;
@@ -226,7 +228,7 @@ export default {
           font-size: 12px;
         }
         i{
-          animation: movePlay 1s linear infinite;
+          animation: movePlay 1s linear 3;
         }
       }
     }
@@ -238,7 +240,8 @@ export default {
     z-index: 9;
     cursor: pointer;
     position: absolute;
-    left: 292px;
+    left: 243px;
+    width: 18px;
     border-top: none;
     padding-bottom: 2px;
     padding-top: 6px;
