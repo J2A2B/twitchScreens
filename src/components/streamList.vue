@@ -192,7 +192,7 @@ export default {
       margin-top: 10px;
       border-bottom: 1px solid #545454;
       list-style: none;
-      padding: 5px;
+      padding: 25px;
       padding-left: 10px;
       display: flex;
       align-items: center;
