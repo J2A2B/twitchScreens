@@ -5,7 +5,8 @@
         <i class="fas fa-times"></i>
       </div>
     </div>
-    {{controlAll}}
+    {{controlPlay}}
+    {{controlMute}}
   </span>
 </template>
 <script>
@@ -43,26 +44,9 @@ export default {
       })
     })
   },
-  // mounted: function () {
-  //   Vue.loadScript('https://player.twitch.tv/js/embed/v1.js')
-  //   .then(() => {
-  //     const options = {
-  //           width: 100,
-  //           height: 100,
-  //           channel: this.videoName
-  //           // autoplay: true
-  //         };
-  //     this.player = new window.Twitch.Player(this.id, options);
-  //     this.player.addEventListener('ready', () => {
-  //
-  //       console.log('stream created ready !!!!' )
-  //
-  //     })
-  //   })
-  // },
 
   computed: {
-    controlAll: function(){
+    controlPlay: function(){
 
       if(!this.player){
         return;
@@ -72,14 +56,14 @@ export default {
       } else {
         this.player.play()
       }
+    },
+    controlMute: function(){
+      if(!this.player){
+        return;
+      }
       this.player.setMuted(this.$store.state.allStreamAreMuted);
-      // if (this.$store.state.allStreamAreRemoved === true) {
-      //   this.player.addEventListener('ended', () => {
-      //     console.log('closed !!!!' )
-      //
-      //   })
-      // }
-    }
+    },
+
   },
   methods: {
     removeOne () {

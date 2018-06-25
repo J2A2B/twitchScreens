@@ -19,13 +19,17 @@
       <li class="main-stream__ul__li"
         v-for="element in this.$store.state.streamList"
         @click="selectStream(element)">
-        <img class="main-stream__ul__li__img" :src=element.channel.logo>
+        <img class="main-stream__ul__li__img" :src="element.channel.logo" >
         <div class="main-stream__ul__li__infos">
           <span class="main-stream__ul__li__infos__name">{{element.channel.display_name}}</span>
           <div class="main-stream__ul__li__infos__views">
             <div class="main-stream__ul__li__infos__views__online"></div>
             <span class="main-stream__ul__li__infos__views__viewers">{{element.viewers}}</span>
           </div>
+        </div>
+        <div class="main-stream__ul__li__cont-play" v-if="allStreamNamePlaying.includes(element.channel.name)
+          && $store.state.streamListPlaying.length > 0">
+          <i class="fas fa-play"></i>
         </div>
       </li>
     </ul>
@@ -53,9 +57,10 @@ export default {
   },
   data: () => ({
     sortStream: false,
-    showListStreams: true
+    showListStreams: true,
+    streamIsPlaying : false,
+    allStreamNamePlaying : []
   }),
-
 
   methods: {
     selectStream (element, event) {
@@ -63,6 +68,7 @@ export default {
       const streamListPlaying = this.$store.state.streamListPlaying
       if (!streamListPlaying.includes(streamChannel)) {
         streamListPlaying.push(streamChannel);
+        this.allStreamNamePlaying = streamListPlaying
         this.$store.commit('SET_STREAM_PLAYING', streamListPlaying)
       } else {
         this.$emit('clicked', this.err)
@@ -92,7 +98,6 @@ export default {
       }
     }
   },
-
   components: {
     stream,
     globalSearch
@@ -135,10 +140,12 @@ export default {
     max-height: calc(100vh - 60px);
     position: fixed;
     overflow: scroll;
+    padding-top: 40px;
     &__select{
+      position: fixed;
       display: flex;
-      background-color: red;
-      margin-bottom: 40px;
+      top: 67px;
+      width: 292px;
       &__viewers, &__alpha {
         height: 40px;
         width: 50%;
@@ -157,7 +164,7 @@ export default {
       &__viewers:hover, &__alpha:hover{
         background-color: #5E19FF;
         color: white;
-        border: 1px, solid, white;
+        border: 1px, solid, transparent;
         i{
           color: white;
         }
@@ -185,8 +192,10 @@ export default {
       margin-top: 10px;
       border-bottom: 1px solid #545454;
       list-style: none;
-      padding: 5px;
+      padding: 25px;
       padding-left: 10px;
+      display: flex;
+      align-items: center;
       &__img{
         height: 35px;
         margin-right: 10px;
@@ -209,6 +218,17 @@ export default {
           word-break: break-all;
         }
       }
+      &__cont-play{
+        position: absolute;
+        right: 15px;
+        color: #00C29A;
+        i{
+          font-size: 12px;
+        }
+        i{
+          animation: movePlay 1s linear infinite;
+        }
+      }
     }
     &__li:hover{
       background-color: lighten(#1c232a, 8%);
@@ -218,7 +238,7 @@ export default {
     z-index: 9;
     cursor: pointer;
     position: absolute;
-    left: 291px;
+    left: 292px;
     border-top: none;
     padding-bottom: 2px;
     padding-top: 6px;
@@ -257,6 +277,14 @@ export default {
   transition: left 0.3s;
   i{
     transform: rotate(180deg);
+  }
+}
+@keyframes movePlay {
+  0% {
+        transform: scale(1.05);
+  }
+  100% {
+        transform: scale(0.9);
   }
 }
 </style>

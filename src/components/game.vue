@@ -26,18 +26,14 @@
               <li class="container__main-game__header__main-search__cont-search__ul__li"
               v-for="item in results" >
                 <router-link
-                @mousedown.native="setSelectedGame(item.game.name), state='open'"
-                :to="{ name: 'game', params: { name: item.game.name }}">
+                :to="{ name: 'game', params: { name: item.game.name }}" @mousedown.native="setSelectedGame(item.game.name), state='open'"
+                >
                   <img v-bind:src="item.game.box.small" alt=""/>
                   <span>{{item.game.name}}</span>
                 </router-link>
               </li>
-              <!-- <li class="container__main-game__header__main-search__cont-search__ul__li" v-if="">
-                No results found :(
-              </li> -->
             </ul>
           </div>
-          <!-- <globalSearch :isOpen="true"></globalSearch> -->
         </div>
         <div class="container__main-game__cont-right">
           <div class="container__main-game__cont-right__header right">
@@ -117,8 +113,10 @@ export default {
     },
     removeAllStream () {
       this.$store.commit('SET_STREAM_REMOVE')
+      this.$store.commit('ALWAYS_OPEN_LIST_STREAM')
     },
     setSelectedGame(game) {
+      this.$router.push('/game/'+ game);
       this.handleNewGameSelected({game: game})
     },
     unFocus(){

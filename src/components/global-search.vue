@@ -46,10 +46,7 @@ export default {
   data () {
     return {
       search:'',
-      searchedGames: [],
       state: 'close',
-      isShowList: true,
-      noResult: false
     }
   },
   created() {

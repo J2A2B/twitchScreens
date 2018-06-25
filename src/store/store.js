@@ -17,10 +17,6 @@ const store = new Vuex.Store({
   mutations: {
     GET_GAMES (state, payload) {
       state.gameListSlug = payload
-      // const slug = require('slug')
-      // for (let i = 0; i < state.gameListSlug.length; i++) {
-      //   state.gameListSlug[i].game.name = slug(state.gameListSlug[i].game.name)
-      // }
       state.gameList = payload
     },
     GET_STREAMS (state, payload) {
@@ -51,15 +47,16 @@ const store = new Vuex.Store({
       state.allStreamArePaused = !state.allStreamArePaused
     },
     SHOW_LIST_STREAM (state) {
-      console.log(state.showStreamList)
       state.showStreamList = !state.showStreamList
+    },
+    ALWAYS_OPEN_LIST_STREAM (state) {
+      state.showStreamList = true
     }
   },
   actions: {
     getGames ({ commit }) {
       return axios.get('/games')
         .then(response => {
-          console.log(response.data.top)
           commit('GET_GAMES', response.data.top)
         })
         .catch(err => {

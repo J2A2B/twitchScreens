@@ -13,7 +13,7 @@ export default new Router({
       component: home
     },
     {
-      path: '/game:name',
+      path: '/game/:name',
       name: 'game',
       component: game,
       props: {game: true, content: false}
