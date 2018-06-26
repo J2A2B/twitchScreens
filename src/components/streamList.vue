@@ -15,6 +15,11 @@
           <i class="fas fa-sort-alpha-down"></i>
           <span>Alpha</span>
         </div>
+        <div class="main-stream__ul__select__cont-cross"
+          @click="showList()"
+          v-bind:class="{ 'openList': !this.$store.state.showStreamList }">
+          <i class="fas fa-chevron-left main-stream__cont-cross__cross"></i>
+        </div>
       </div>
       <li class="main-stream__ul__li"
         v-for="element in this.$store.state.streamList"
@@ -33,11 +38,6 @@
         </div>
       </li>
     </ul>
-    <div class="main-stream__cont-cross"
-      @click="showList()"
-      v-bind:class="{ 'openList': !this.$store.state.showStreamList }">
-      <i class="fas fa-chevron-left main-stream__cont-cross__cross"></i>
-    </div>
   </div>
 </template>
 
@@ -146,7 +146,7 @@ export default {
       position: fixed;
       display: flex;
       top: 67px;
-      width: 292px;
+      width: 301px;
       &__viewers, &__alpha {
         height: 40px;
         width: 124px;
@@ -183,6 +183,38 @@ export default {
       .sort{
         background-color: #5E19FF;
         color: white;
+        i{
+          color: white;
+        }
+      }
+      &__cont-cross{
+        z-index: 9;
+        cursor: pointer;
+        position: absolute;
+        left: 251px;
+        height: 32px;
+        width: 19px;
+        border-top: none;
+        padding-bottom: 2px;
+        padding-top: 6px;
+        padding-left: 15px;
+        background: white;
+        padding-right: 15px;
+        border: 1px solid #5E19FF;
+        border-left: none;
+        border-top: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        &__cross{
+          color: #4b367c;
+          font-size: 30px;
+          transition: transform 0.3s;
+          transform: rotate(0deg);
+        }
+      }
+      &__cont-cross:hover{
+        background: #5E19FF;
         i{
           color: white;
         }
@@ -236,34 +268,7 @@ export default {
       background-color: lighten(#1c232a, 8%);
     }
   }
-  &__cont-cross{
-    z-index: 9;
-    cursor: pointer;
-    position: absolute;
-    left: 251px;
-    width: 19px;
-    border-top: none;
-    padding-bottom: 2px;
-    padding-top: 6px;
-    padding-left: 15px;
-    background: white;
-    padding-right: 15px;
-    border: 1px solid #5E19FF;
-    border-left: none;
-    border-top: none;
-    &__cross{
-      color: #4b367c;
-      font-size: 30px;
-      transition: transform 0.3s;
-      transform: rotate(0deg);
-    }
-  }
-  &__cont-cross:hover{
-    background: #5E19FF;
-    i{
-      color: white;
-    }
-  }
+
 }
 .main-stream-hide{
   transition: all 0.3s;

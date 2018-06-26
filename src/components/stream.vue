@@ -1,13 +1,17 @@
 <template>
-  <span :videoName="videoName" v-if="videoName !== 'undefined'">
-    <div ref="ref" class="main-stream">
-      <div class="main-stream__remove" @click="removeOne">
-        <i class="fas fa-times"></i>
+  <div :videoName="videoName" v-if="videoName !== 'undefined'">
+    <div ref="ref" class="stream-open">
+      <div class="stream-open__header">
+        <div></div>
+        <h4 class="stream-open__header__title-video">{{videoName}}</h4>
+        <div class="stream-open__header__remove" @click="removeOne">
+          <i class="fas fa-times"></i>
+        </div>
       </div>
     </div>
     {{controlPlay}}
     {{controlMute}}
-  </span>
+  </div>
 </template>
 <script>
 import axios from 'axios';
@@ -79,26 +83,40 @@ export default {
 </script>
 
 <style lang="scss">
-    .main-stream iframe{
-      width: 100%;
-      height: calc(50vh - 60px);
+.stream-open iframe{
+  width: 100%;
+  height: calc(50vh - 60px);
+}
+.stream-open {
+
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  align-items: flex-end;
+
+  &__header{
+    background: #4b367c;
+    width: 100%;
+    height: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    &__title-video{
+      width:100%;
+      text-align:center;
+      color: white;
     }
-    .main-stream {
-      cursor: pointer;
-      position: relative;
-      &__remove {
-        position: absolute;
-        right:0px;
-        top: 0px;
-        background: white;
-        height: 20px;
-        width: 20px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        i{
-          color: red;
-        }
+    &__remove {
+      margin-right: 5px;
+      height: 20px;
+      width: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      i{
+        color: red;
       }
     }
+  }
+}
 </style>
