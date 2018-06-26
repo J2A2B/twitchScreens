@@ -265,6 +265,7 @@ export default {
               color: #5E19FF;
             }
             &__ul{
+              width: 100%;
               margin-top: 53px;
               background-color: rgba(250, 250, 250, 0.95);
               color: #222222;
@@ -287,7 +288,6 @@ export default {
                 cursor: pointer;
                 padding: 5px;
                 padding-left: 10px;
-                left: 15px;
                 background-color: rgba(250, 250, 250, 0.95);
               }
               .fa-check{
