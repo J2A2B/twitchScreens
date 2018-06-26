@@ -111,8 +111,8 @@ export default {
     width: 10px;
 }
 ::-webkit-scrollbar-track {
-  // margin-top: 40px;
     background: #f1f3f1;
+    margin-top: 40px;
 }
 ::-webkit-scrollbar-thumb {
     background: #4B397A;
@@ -149,7 +149,7 @@ export default {
       width: 292px;
       &__viewers, &__alpha {
         height: 40px;
-        width: 120px;
+        width: 124px;
         background: white;
         display: flex;
         justify-content: center;
@@ -240,8 +240,8 @@ export default {
     z-index: 9;
     cursor: pointer;
     position: absolute;
-    left: 243px;
-    width: 18px;
+    left: 251px;
+    width: 19px;
     border-top: none;
     padding-bottom: 2px;
     padding-top: 6px;

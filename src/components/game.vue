@@ -3,7 +3,8 @@
     <div class="container__main-game">
         <div class="container__main-game__header left">
           <div class="container__main-game__header__main-search__cont-search">
-            <label class="container__main-game__header__main-search__cont-search__label" :data-state="state" for="search">
+            <label class="container__main-game__header__main-search__cont-search__label"
+            :data-state="state" for="search">
               <input class="inputText"
               @blur="unFocus()"
               name="searchGame"
@@ -26,7 +27,8 @@
               <li class="container__main-game__header__main-search__cont-search__ul__li"
               v-for="item in results" >
                 <router-link
-                :to="{ name: 'game', params: { name: item.game.name }}" @mousedown.native="setSelectedGame(item.game.name), state='open'"
+                :to="{ name: 'game', params: { name: item.game.name }}"
+                @mousedown.native="setSelectedGame(item.game.name), state='open'"
                 >
                   <img v-bind:src="item.game.box.small" alt=""/>
                   <span>{{item.game.name}}</span>
@@ -37,7 +39,7 @@
         </div>
         <div class="container__main-game__cont-right">
           <div class="container__main-game__cont-right__header right">
-            <menuTop></menuTop>
+            <!-- <menuTop></menuTop> -->
           </div>
           <h1 class="container__main-game__cont-right__title">
             <router-link :to="{name: 'home'}">
@@ -67,7 +69,7 @@
     <ul class="container__ul"
       :class="{ 'container-full__ul-open': !this.$store.state.showStreamList }">
       <li class="container__ul__li" v-for="element in this.$store.state.streamListPlaying"
-        :class="{ 'hideitmotherfucker': element === 'undefined' }">
+        :class="{ 'hide-stream': element === 'undefined' }">
         <stream :videoName="element"></stream>
       </li>
     </ul>
@@ -99,6 +101,7 @@ export default {
   },
   created(){
     this.handleNewGameSelected({game: this.$route.params.name})
+    this.$store.commit('ALWAYS_OPEN_LIST_STREAM')
     this.getGames()
     if (this.isOpen) {
       this.state = 'open'
@@ -153,9 +156,6 @@ export default {
 
 <style scoped lang="scss">
 
-.hideitmotherfucker{
-  display: none;
-}
 .container{
   display: flex;
   width: 100%;
@@ -399,7 +399,7 @@ export default {
         padding-left: 15px;
         padding-right: 15px;
         height: 100%;
-        min-width: 260px;
+        min-width: 270px;
         border: 1px solid #5E19FF;
         display: flex;
         justify-content: center;
@@ -420,6 +420,11 @@ export default {
     width: calc(100% - 300px);
     margin-left: 302px;
     transition: all 0.3s;
+
+    .hide-stream{
+      display: none;
+    }
+
     &__li{
       width: 50%;
     }
