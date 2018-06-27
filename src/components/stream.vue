@@ -72,6 +72,11 @@ export default {
   methods: {
     removeOne () {
       this.removeOneStreamSelected({stream: this.videoName})
+      const streamPlayingDisabled = this.$store.state.streamListPlaying
+      const checkIfAllStreamsAreDisabled = !!streamPlayingDisabled.reduce(function(a, b){ return (a === b) ? a : NaN; });
+      if (checkIfAllStreamsAreDisabled) {
+        this.$store.commit('SET_STREAM_REMOVE')
+      }
     },
     ...mapActions({
       removeOneStreamSelected: 'removeOneStreamSelected'
